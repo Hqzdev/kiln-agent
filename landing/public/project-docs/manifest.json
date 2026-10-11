@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "architectureDocuments": 22,
+  "completedTasks": 9,
+  "documents": [
+    {
+      "id": "P0.1",
+      "taskId": "P0.1",
+      "source": "docs/product-scope.md",
+      "downloadUrl": "/project-docs/product-scope.md",
+      "sha256": "27bb8db6bc4929002d469e1726c0504da8aa5627e9b93f8d77f6b0424f6f5917",
+      "bytes": 8170,
+      "taskCompleted": true
+    },
+    {
+      "id": "P0.2",
+      "taskId": "P0.2",
+      "source": "docs/domain-glossary.md",
+      "downloadUrl": "/project-docs/domain-glossary.md",
+      "sha256": "13f7741b733b655b8a6e3cc1bcd7e2d9d8fd966817d250574ae1d38b9d320fb0",
+      "bytes": 9195,
+      "taskCompleted": true
+    },
+    {
+      "id": "P0.3",
+      "taskId": "P0.3",
+      "source": "docs/chat-to-run.md",
+      "downloadUrl": "/project-docs/chat-to-run.md",
+      "sha256": "3e40fb40f0d090e8e6a8278f2424fcb0244a04b0d6f41d856f1ab4ec8fb3bbe6",
+      "bytes": 5484,
+      "taskCompleted": true
+    },
+    {
+      "id": "P0.4",
+      "taskId": "P0.4",
+      "source": "docs/roles-and-gates.md",
+      "downloadUrl": "/project-docs/roles-and-gates.md",
+      "sha256": "5eaef9af9e3268b5f04e4e7f52abd373f91ff1476318c9fcec4ef02269d902e1",
+      "bytes": 7028,
+      "taskCompleted": true
+    },
+    {
+      "id": "P0.5",
+      "taskId": "P0.5",
+      "source": "docs/permission-policy.md",
+      "downloadUrl": "/project-docs/permission-policy.md",
+      "sha256": "b0cd3b72aa2ac390c8a2bc543e447b27a88952c133ed421e272b0e46fe77c2ff",
+      "bytes": 6943,
+      "taskCompleted": true
+    },
+    {
+      "id": "P0.6",
+      "taskId": "P0.6",
+      "source": "docs/supported-projects.md",
+      "downloadUrl": "/project-docs/supported-projects.md",
+      "sha256": "f676ea366f2e53fbf1f80a08315ce5d89120b858346b98d8815094ceb2745b80",
+      "bytes": 6435,
+      "taskCompleted": true
+    },
+    {
+      "id": "P0.7",
+      "taskId": "P0.7",
+      "source": "docs/platform-matrix.md",
+      "downloadUrl": "/project-docs/platform-matrix.md",
+      "sha256": "7d984c9c6f57bcd8a3c981dec5069ffa3114435c15d148148047cf2a6262e2f5",
+      "bytes": 4800,
+      "taskCompleted": false
+    },
+    {
+      "id": "P0.8",
+      "taskId": "P0.8",
+      "source": "docs/tool-boundaries.md",
+      "downloadUrl": "/project-docs/tool-boundaries.md",
+      "sha256": "7724489b7cc67ee7d12d604a16cf37af4b1fe41a98ff4f54edd1abdf3fd4a2fe",
+      "bytes": 6635,
+      "taskCompleted": true
+    },
+    {
+      "id": "P0.9",
+      "taskId": "P0.9",
+      "source": "docs/data-lifecycle.md",
+      "downloadUrl": "/project-docs/data-lifecycle.md",
+      "sha256": "a1259f3880f62fa44d39a93a6b90b256e4517ec75775b6b4819380a3da726e7f",
+      "bytes": 7706,
+      "taskCompleted": true
+    },
+    {
+      "id": "P0.10",
+      "taskId": "P0.10",
+      "source": "docs/acceptance-matrix.md",
+      "downloadUrl": "/project-docs/acceptance-matrix.md",
+      "sha256": "07f8558fb4b3396cbafd4467695c46c958f1c3e777f0190ffb7c529b2c3e3c2c",
+      "bytes": 7671,
+      "taskCompleted": true
+    },
+    {
+      "id": "A2.1",
+      "taskId": "A2.1",
+      "source": "docs/architecture/repo-policy.md",
+      "downloadUrl": "/project-docs/architecture/repo-policy.md",
+      "sha256": "b3c34be3fd6488ba3216317cbff6831aa29a6e64c591fc31607e0d8acc3974e3",
+      "bytes": 4483,
+      "taskCompleted": false
+    },
+    {
+      "id": "A2.2",
+      "taskId": "A2.2",
+      "source": "docs/architecture/apple-targets.md",
+      "downloadUrl": "/project-docs/architecture/apple-targets.md",
+      "sha256": "0a788258136fb8f9e5436a789c245e770564af768f1db70597aa5a3ae4eec994",
+      "bytes": 4777,
+      "taskCompleted": false
+    },
+    {
+      "id": "A2.3",
+      "taskId": "A2.3",
+      "source": "docs/architecture/swift-packages.md",
+      "downloadUrl": "/project-docs/architecture/swift-packages.md",
+      "sha256": "1e02335b24f04c3cba769dc6fae55ca549488ad9cd8f53289244fda3489df747",
+      "bytes": 4256,
+      "taskCompleted": false
+    },
+    {
+      "id": "A2.4",
+      "taskId": "A2.4",
+      "source": "docs/architecture/java-modules.md",
+      "downloadUrl": "/project-docs/architecture/java-modules.md",
+      "sha256": "11a2578f99bd44a09e0b18508409c6614373902bec1f105ee21137f07f366434",
+      "bytes": 4197,
+      "taskCompleted": false
+    },
+    {
+      "id": "A2.5",
+      "taskId": "A2.5",
+      "source": "docs/architecture/composition-root.md",
+      "downloadUrl": "/project-docs/architecture/composition-root.md",
+      "sha256": "157120e797f2f0e9a5013861103a2903f1906b8b88c628a6b71be65913f67b18",
+      "bytes": 5453,
+      "taskCompleted": false
+    },
+    {
+      "id": "A2.6",
+      "taskId": "A2.6",
+      "source": "docs/architecture/toolchain.md",
+      "downloadUrl": "/project-docs/architecture/toolchain.md",
+      "sha256": "a908828c51a804d7b5b9d45a85878efea880775df72f16a68a169826ac2d7608",
+      "bytes": 4358,
+      "taskCompleted": false
+    },
+    {
+      "id": "A2.7",
+      "taskId": "A2.7",
+      "source": "docs/architecture/formatting.md",
+      "downloadUrl": "/project-docs/architecture/formatting.md",
+      "sha256": "4fb379e9faec613861655c1bdf5ea4e6e66e0d2565024fcbaf320e5ebddd4f7f",
+      "bytes": 4106,
+      "taskCompleted": false
+    },
+    {
+      "id": "A2.8",
+      "taskId": "A2.8",
+      "source": "docs/architecture/build-commands.md",
+      "downloadUrl": "/project-docs/architecture/build-commands.md",
+      "sha256": "65cb50f049c2f1a1b3b844afce5cf5549a94337e86108ca49a191c8140ea305e",
+      "bytes": 3159,
+      "taskCompleted": false
+    },
+    {
+      "id": "A2.9",
+      "taskId": "A2.9",
+      "source": "docs/architecture/ci.md",
+      "downloadUrl": "/project-docs/architecture/ci.md",
+      "sha256": "d87b6251ae40057b0676fab071c631d251edc3a2616a6e409cd1d73beaf699cd",
+      "bytes": 4075,
+      "taskCompleted": false
+    },
+    {
+      "id": "A2.10",
+      "taskId": "A2.10",
+      "source": "docs/architecture/fixtures.md",
+      "downloadUrl": "/project-docs/architecture/fixtures.md",
+      "sha256": "023d5daca7e6c689e882fdeee4e77fb8e52ddce0bd84754c39df4a25250537ee",
+      "bytes": 4606,
+      "taskCompleted": false
+    },
+    {
+      "id": "A2.11",
+      "taskId": "A2.11",
+      "source": "docs/architecture/contracts.md",
+      "downloadUrl": "/project-docs/architecture/contracts.md",
+      "sha256": "1254986b2c27cc1ae64e762eb2be4e56a1821d7da5449eb54722d0409b668426",
+      "bytes": 6599,
+      "taskCompleted": false
+    },
+    {
+      "id": "A2.12",
+      "taskId": "A2.12",
+      "source": "docs/architecture/logging.md",
+      "downloadUrl": "/project-docs/architecture/logging.md",
+      "sha256": "4472d4468ed775111154efc25788333c6d444e5f69f3e871d181232cc0f1f268",
+      "bytes": 4901,
+      "taskCompleted": false
+    },
+    {
+      "id": "architecture-overview",
+      "taskId": null,
+      "source": "docs/README.md",
+      "downloadUrl": "/project-docs/README.md",
+      "sha256": "d90fb3d611f7e01e58878a1644744ae7c3035df34b90b0b44edbc1fc0fc9b336",
+      "bytes": 5874,
+      "taskCompleted": false
+    },
+    {
+      "id": "documentation-review",
+      "taskId": null,
+      "source": "docs/documentation-review.md",
+      "downloadUrl": "/project-docs/documentation-review.md",
+      "sha256": "7140a97606b35163dcf8a866dce8b9810b020979b00952763ce3fc4b7e46e9bf",
+      "bytes": 4620,
+      "taskCompleted": false
+    }
+  ]
+}
