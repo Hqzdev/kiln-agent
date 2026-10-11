@@ -1,0 +1,8 @@
+# render intermediates (regenerate with work/render.mjs and work/audio.py)
+work/video.mp4
+work/audio.wav
+work/poster.png
+work/audio_check.png
+work/stills/
+work/vchk/
+work/render.log
