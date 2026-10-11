@@ -45,6 +45,7 @@
 .ws-spec-architecture-link:hover { color: var(--ember); }
 .ws-tab-note { margin-left: auto; align-self: center; color: #707070; font-size: 10px; }
 .ws-panel { padding-top: 32px; min-height: 440px; }
+.ws-panel:focus-visible { outline: none; }
 .ws-catalog { display: grid; grid-template-columns: 192px minmax(0, 1fr); gap: 38px; align-items: start; }
 .ws-type-sidebar { position: sticky; top: 114px; }
 .ws-sidebar-title { display: flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 9px; letter-spacing: .05em; color: #6e6e6e; margin: 5px 10px 17px; }
@@ -65,13 +66,26 @@
 .ws-task-toolbar { display: flex; justify-content: space-between; gap: 18px; align-items: center; margin: 0 0 25px; }
 .ws-catalog-controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
 .ws-epic-filter { display: flex; align-items: center; gap: 9px; font-size: 10px; color: #6e6e6e; min-width: 0; }
-.ws-epic-filter select { max-width: 330px; min-width: 0; font: inherit; color: #444; background: #fafafa; border: 1px solid var(--border); border-radius: 5px; padding: 8px; }
+.ws-select { position: relative; width: 330px; max-width: 100%; min-width: 0; }
+.ws-select-trigger { display: flex; align-items: center; justify-content: space-between; gap: 14px; width: 100%; min-height: 34px; padding: 8px 11px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text); text-align: left; font-size: 11px; }
+.ws-select-trigger > span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.ws-select-trigger > svg { flex-shrink: 0; color: var(--text-2); transition: transform 150ms ease; }
+.ws-select-trigger:hover, .ws-select-trigger[aria-expanded="true"] { border-color: var(--border-strong); background: var(--surface-2); }
+.ws-select-trigger[aria-expanded="true"] > svg { transform: rotate(180deg); }
+.ws-select-menu { position: absolute; top: calc(100% + 6px); left: 0; z-index: 10; width: max-content; min-width: 100%; max-width: min(460px, calc(100vw - 48px)); max-height: min(340px, 50dvh); padding: 5px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; border: 1px solid var(--border-strong); border-radius: 8px; background: var(--surface); box-shadow: 0 8px 24px #00000012, var(--shadow-card); }
+.ws-select-menu:focus-visible { outline: none; }
+.ws-select-option { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 9px 10px; border-radius: 4px; color: var(--text-2); font-size: 11px; line-height: 1.5; cursor: pointer; }
+.ws-select-option.active { background: var(--surface-2); color: var(--text); }
+.ws-select-option[aria-selected="true"] { color: var(--text); font-weight: 550; }
+.ws-select-option > svg { flex-shrink: 0; color: var(--ember); }
+.ws-select.compact { width: auto; }
+.ws-select.compact .ws-select-trigger { min-width: 53px; gap: 8px; }
+.ws-select.compact .ws-select-menu { max-height: 220px; }
 .ws-pagination { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.ws-pagination label { display: flex; align-items: center; gap: 7px; white-space: nowrap; font-size: 10px; color: #6e6e6e; }
-.ws-pagination select { font: inherit; color: #444; border: 1px solid var(--border); background: #fafafa; border-radius: 5px; padding: 7px; }
-.ws-pagination button { display: grid; place-items: center; width: 28px; height: 30px; border: 1px solid var(--border); border-radius: 5px; }
-.ws-pagination button:disabled { cursor: default; color: #b8b8b8; }
-.ws-pagination button:not(:disabled):hover { background: #f1f1f3; }
+.ws-page-picker { display: flex; align-items: center; gap: 7px; white-space: nowrap; font-size: 10px; color: #6e6e6e; }
+.ws-pagination > button { display: grid; place-items: center; width: 28px; height: 30px; border: 1px solid var(--border); border-radius: 5px; }
+.ws-pagination > button:disabled { cursor: default; color: #b8b8b8; }
+.ws-pagination > button:not(:disabled):hover { background: #f1f1f3; }
 .ws-catalog-pagination { display: flex; justify-content: flex-end; padding-top: 22px; }
 .ws-detail-roadmap { margin-top: 16px; gap: 20px; }
 .ws-detail-roadmap strong { text-align: right; }

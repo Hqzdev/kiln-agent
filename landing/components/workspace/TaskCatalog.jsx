@@ -4,12 +4,13 @@ import { useRef, useState } from "react";
 import { ArrowUpRight, Search, X, ListFilter, ChevronRight, ChevronLeft, Check, CircleCheck } from "lucide-react";
 import { projectPlan } from "@/lib/workspace/data.mjs";
 import { formatDate } from "@/lib/workspace/project-plan.mjs";
+import CatalogSelect from "./CatalogSelect";
 
 const PAGE_SIZE = 50;
 
 function Pagination({ page, pageCount, onChange }) {
   if (pageCount <= 1) return null;
-  return <nav className="ws-pagination" aria-label="Страницы каталога"><button aria-label="Предыдущая страница задач" disabled={page === 1} onClick={() => onChange(page - 1)}><ChevronLeft size={14} /></button><label>Страница <select aria-label="Номер страницы каталога" value={page} onChange={(event) => onChange(Number(event.target.value))}>{Array.from({ length: pageCount }, (_, index) => <option key={index + 1} value={index + 1}>{index + 1}</option>)}</select> из {pageCount}</label><button aria-label="Следующая страница задач" disabled={page === pageCount} onClick={() => onChange(page + 1)}><ChevronRight size={14} /></button></nav>;
+  return <nav className="ws-pagination" aria-label="Страницы каталога"><button aria-label="Предыдущая страница задач" disabled={page === 1} onClick={() => onChange(page - 1)}><ChevronLeft size={14} /></button><div className="ws-page-picker">Страница <CatalogSelect compact label="Номер страницы каталога" value={page} onChange={onChange} options={Array.from({ length: pageCount }, (_, index) => ({ value: index + 1, label: String(index + 1) }))} /> из {pageCount}</div><button aria-label="Следующая страница задач" disabled={page === pageCount} onClick={() => onChange(page + 1)}><ChevronRight size={14} /></button></nav>;
 }
 
 export default function TaskCatalog({ onOpenTask, status = "active", type = "all", onScopeChange }) {
@@ -50,7 +51,7 @@ export default function TaskCatalog({ onOpenTask, status = "active", type = "all
           <div><h2>{isCompleted ? "Выполненные задачи" : activeType?.label || "План реализации"}</h2><p>{isCompleted ? "Готовые результаты со ссылками на документы и проверку." : activeType?.description || "Откройте задачу: от экранов и файлов до итоговой проверки."}</p></div>
           <div className="ws-search"><Search size={16} /><input id="ws-task-search" type="search" aria-label="Поиск задач, экранов и файлов" placeholder="Задача, экран или файл…" value={query} onChange={(event) => changeQuery(event.target.value)} />{query && <button aria-label="Очистить поиск" onClick={() => changeQuery("")}><X size={15} /></button>}</div>
         </div>
-        <div className="ws-catalog-controls"><label className="ws-epic-filter">Блок <select aria-label="Блок реализации" value={epic} onChange={(event) => { setEpic(event.target.value); setPage(1); }}><option value="all">Все блоки</option>{availableEpics.map((item) => <option key={item.id} value={item.id}>{item.id} · {item.title}</option>)}</select></label><Pagination page={currentPage} pageCount={pageCount} onChange={changePage} /></div>
+        <div className="ws-catalog-controls"><div className="ws-epic-filter">Блок <CatalogSelect label="Блок реализации" value={epic} onChange={(value) => { setEpic(value); setPage(1); }} options={[{ value: "all", label: "Все блоки" }, ...availableEpics.map((item) => ({ value: item.id, label: `${item.id} · ${item.title}` }))]} /></div><Pagination page={currentPage} pageCount={pageCount} onChange={changePage} /></div>
         <div className={`ws-list-meta ${isCompleted ? "completed" : ""}`}><span aria-live="polite">{results.length} из {scopedTasks.length} задач{results.length > PAGE_SIZE && ` · показаны ${(currentPage - 1) * PAGE_SIZE + 1}–${Math.min(currentPage * PAGE_SIZE, results.length)}`}</span><span>{isCompleted ? <Check size={12} /> : <i />}{isCompleted ? "Выполнено" : "Запланировано"}</span></div>
         <div className="ws-column-labels"><span>ЗАДАЧА / {isCompleted ? "ГОТОВЫЙ" : "ОЖИДАЕМЫЙ"} РЕЗУЛЬТАТ</span><span>ПРИОРИТЕТ</span><span>{isCompleted ? "ГОТОВО" : "ДЕДЛАЙН"}</span><span /></div>
         {groups.map((group) => (
