@@ -20,7 +20,7 @@ const barPosition = (stream) => {
   return { left: `${left}%`, width: `${width}%` };
 };
 
-export default function Roadmap({ onOpenTask }) {
+export default function Roadmap({ onOpenTask, onOpenStream }) {
   const [selectedId, setSelectedId] = useState(projectPlan.streams[0].id);
   const selected = projectPlan.streams.find((stream) => stream.id === selectedId);
   const [expandedId, setExpandedId] = useState(null);
@@ -37,8 +37,11 @@ export default function Roadmap({ onOpenTask }) {
           <div className="ws-week-header"><div>БЛОК РЕАЛИЗАЦИИ</div>{weeks.map(([days, month], index) => <div key={index}><span>{month}</span><strong>{days}</strong></div>)}</div>
           {projectPlan.streams.map((stream) => {
             const phase = stream.type === "qa" ? "qa" : stream.id === "delivery" ? "delivery" : "development";
+            const tasks = projectPlan.getTasksForStream(stream);
+            const completed = tasks.filter((task) => task.status === "completed").length;
+            const percent = tasks.length ? Math.round(completed / tasks.length * 100) : 0;
             return <div key={stream.id} className={`ws-gantt-row ${selectedId === stream.id ? "selected" : ""}`}>
-              <button className="ws-stream-name" aria-pressed={selectedId === stream.id} onClick={() => setSelectedId(stream.id)}><span>{stream.title}<small>{stream.taskIds.length} задач{projectPlan.getTasksForStream(stream).some((task) => task.status === "completed") && ` · ${projectPlan.getTasksForStream(stream).filter((task) => task.status === "completed").length} готово`}</small></span><span>{formatDate(stream.end)}</span></button>
+              <button className="ws-stream-name" onClick={() => onOpenStream(stream.id)} aria-label={`${stream.title}: выполнено ${percent}%. Открыть задачи блока`}><span>{stream.title}<small>{tasks.length} задач · {completed} готово · <strong>{percent}%</strong></small></span><span>{formatDate(stream.end)}</span></button>
               <div className="ws-gantt-track"><button className={`ws-gantt-bar ${phase} ${stream.start === stream.end ? "milestone" : ""}`} style={barPosition(stream)} onClick={() => setSelectedId(stream.id)} aria-label={`${stream.title}: ${formatDate(stream.start)} — ${formatDate(stream.end)}. Открыть результат`} aria-pressed={selectedId === stream.id}>{stream.start === stream.end ? <Flag size={13} /> : <span>до {formatDate(stream.end)}</span>}</button></div>
             </div>;
           })}

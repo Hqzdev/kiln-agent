@@ -31,11 +31,18 @@ export default function Workspace() {
         setCatalogScope({ status: tab === "completed" ? "completed" : "active", type: "all" });
       } else if (tabs.some((item) => item.id === tab)) setActiveTab(tab);
       else if (tab.startsWith("spec-")) setActiveTab("specification");
+      const stream = projectPlan.getStream(url.searchParams.get("stream"));
+      if (stream && (!tab || tab === "tasks")) {
+        setActiveTab("tasks");
+        setCatalogScope({ status: "all", type: "all", stream: stream.id });
+      }
       const task = projectPlan.getTask(url.searchParams.get("task"));
       setSelectedTask(task || null);
       if (task) {
         setActiveTab("tasks");
-        setCatalogScope({ status: task.status === "completed" ? "completed" : "active", type: "all" });
+        setCatalogScope(stream?.taskIds.includes(task.id)
+          ? { status: "all", type: "all", stream: stream.id }
+          : { status: task.status === "completed" ? "completed" : "active", type: "all" });
       }
     };
     restoreLocation();
@@ -52,6 +59,7 @@ export default function Workspace() {
     if (id === "tasks") setCatalogScope({ status: "active", type: "all" });
     const url = new URL(window.location.href);
     url.hash = id;
+    url.searchParams.delete("stream");
     window.history.replaceState(null, "", url);
   };
 
@@ -59,16 +67,32 @@ export default function Workspace() {
     setCatalogScope(scope);
     const url = new URL(window.location.href);
     url.hash = scope.status === "completed" ? "completed" : "tasks";
+    url.searchParams.delete("stream");
     window.history.replaceState(null, "", url);
+  };
+
+  const openStream = (id) => {
+    setActiveTab("tasks");
+    setCatalogScope({ status: "all", type: "all", stream: id });
+    const url = new URL(window.location.href);
+    url.hash = "tasks";
+    url.searchParams.set("stream", id);
+    url.searchParams.delete("task");
+    window.history.replaceState(null, "", url);
+    tabRefs.current[0]?.focus();
   };
 
   const openTask = (task) => {
     setSelectedTask(task);
     setActiveTab("tasks");
     const status = task.status === "completed" ? "completed" : "active";
-    setCatalogScope((scope) => scope.status === status ? scope : { status, type: "all" });
     const url = new URL(window.location.href);
-    url.hash = status === "completed" ? "completed" : "tasks";
+    const stream = projectPlan.getStream(url.searchParams.get("stream"));
+    const inStream = stream?.taskIds.includes(task.id);
+    setCatalogScope((scope) => inStream ? { status: "all", type: "all", stream: stream.id }
+      : !scope.stream && scope.status === status ? scope : { status, type: "all" });
+    if (!inStream) url.searchParams.delete("stream");
+    url.hash = inStream ? "tasks" : status === "completed" ? "completed" : "tasks";
     url.searchParams.set("task", task.id);
     window.history.replaceState(null, "", url);
   };
@@ -118,8 +142,8 @@ export default function Workspace() {
         <span className="ws-tab-note">{projectPlan.completedTasks.length} выполнено · {projectPlan.tasks.length} всего</span>
       </div>
       <section className="ws-panel" id={`ws-panel-${activeTab}`} role="tabpanel" tabIndex={0} aria-labelledby={`ws-tab-${activeTab}`}>
-        {activeTab === "tasks" && <TaskCatalog key={catalogScope.status} status={catalogScope.status} type={catalogScope.type} onScopeChange={selectCatalogScope} onOpenTask={openTask} />}
-        {activeTab === "roadmap" && <Roadmap onOpenTask={(task) => { selectTab("tasks"); openTask(task); }} />}
+        {activeTab === "tasks" && <TaskCatalog key={`${catalogScope.status}-${catalogScope.stream || "all"}`} status={catalogScope.status} type={catalogScope.type} stream={catalogScope.stream} onScopeChange={selectCatalogScope} onOpenTask={openTask} />}
+        {activeTab === "roadmap" && <Roadmap onOpenStream={openStream} onOpenTask={(task) => { selectTab("tasks"); openTask(task); }} />}
         {activeTab === "specification" && <SpecificationView />}
       </section>
       <Footer className="ws-footer" />
