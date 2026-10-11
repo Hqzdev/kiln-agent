@@ -1,0 +1,15 @@
+{
+  "messageId": "ble-1",
+  "total": 3,
+  "fragments": [
+    {
+      "index": 2,
+      "data": "Yw=="
+    },
+    {
+      "index": 0,
+      "data": "YQ=="
+    }
+  ],
+  "expected": "incomplete"
+}

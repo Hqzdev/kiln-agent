@@ -68,7 +68,7 @@ lines.push(`\n## 22. Выполненные задачи: ${projectPlan.complete
 projectPlan.completedTasks.forEach((task) => lines.push(`| ${[`${task.id}: ${task.title}`, task.completedAt, task.deliverables.map((artifact) => artifact.path).join(", "), task.documentationSummary].map(tableText).join(" | ")} |`));
 lines.push("\n## 23. Подготовленные архитектурные документы\n");
 for (const document of documents) {
-  const content = await readFile(new URL(`../${document.path}`, import.meta.url), "utf8");
+  const content = await readFile(new URL(`../../${document.path}`, import.meta.url), "utf8");
   lines.push(`\n### ${document.path}\n`);
   lines.push(content.replace(/^(#{1,6}) /gm, (_, hashes) => `${"#".repeat(Math.min(hashes.length + 3, 6))} `));
 }

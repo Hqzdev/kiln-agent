@@ -21,7 +21,7 @@ export default function TaskCatalog({ onOpenTask, status = "active", type = "all
   const isCompleted = status === "completed";
   const activeStream = projectPlan.getStream(stream);
   const scopedTasks = activeStream ? projectPlan.getTasksForStream(activeStream) : projectPlan.getTasksForStatus(status);
-  const availableTypes = projectPlan.types.filter((item) => projectPlan.remainingTasks.some((task) => task.type === item.id));
+  const availableTypes = projectPlan.types.filter((item) => projectPlan.tasks.some((task) => task.type === item.id));
   const results = projectPlan.findTasks({ type, epic, stream, query, status });
   const pageCount = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
   const currentPage = Math.min(page, pageCount);
@@ -29,7 +29,7 @@ export default function TaskCatalog({ onOpenTask, status = "active", type = "all
   const groups = projectPlan.types.map((item) => ({ ...item, tasks: visibleTasks.filter((task) => task.type === item.id) })).filter((item) => item.tasks.length);
   const activeType = projectPlan.getType(type);
   const availableEpics = projectPlan.epics.filter((item) => scopedTasks.some((task) => task.epicId === item.id && (type === "all" || task.type === type)));
-  const changeType = (value) => { setEpic("all"); setQuery(""); setPage(1); onScopeChange({ status: "active", type: value }); };
+  const changeType = (value) => { setEpic("all"); setQuery(""); setPage(1); onScopeChange({ status: value === "architecture" ? "all" : "active", type: value }); };
   const showCompleted = () => { setEpic("all"); setQuery(""); setPage(1); onScopeChange({ status: "completed", type: "all" }); };
   const changeQuery = (value) => { setQuery(value); setPage(1); };
   const changePage = (value) => { setPage(value); contentRef.current?.scrollIntoView({ block: "start", behavior: "auto" }); };
@@ -42,7 +42,7 @@ export default function TaskCatalog({ onOpenTask, status = "active", type = "all
           <button aria-pressed={!activeStream && !isCompleted && type === "all"} className={!activeStream && !isCompleted && type === "all" ? "selected" : ""} onClick={() => changeType("all")}><span>Все задачи</span><span>{projectPlan.remainingTasks.length}</span></button>
           <button aria-pressed={isCompleted} className={`ws-sidebar-completed ${isCompleted ? "selected" : ""}`} onClick={showCompleted}><span><CircleCheck size={14} />Выполненные</span><span>{projectPlan.completedTasks.length}</span></button>
           {availableTypes.map((item) => (
-            <button key={item.id} aria-pressed={!isCompleted && type === item.id} className={!isCompleted && type === item.id ? "selected" : ""} onClick={() => changeType(item.id)}><span>{item.label}</span><span>{projectPlan.getTasksForType(item.id, { status: "active" }).length}</span></button>
+            <button key={item.id} aria-pressed={!isCompleted && type === item.id} className={!isCompleted && type === item.id ? "selected" : ""} onClick={() => changeType(item.id)}><span>{item.label}</span><span>{projectPlan.getTasksForType(item.id, { status: item.id === "architecture" ? "all" : "active" }).length}</span></button>
           ))}
         </div>
         <div className="ws-slice-note"><span>ПОЛНЫЙ ПЛАН РЕАЛИЗАЦИИ</span><p>{projectPlan.tasks.length} подзадач в {projectPlan.epics.length} блоках. Каждая связана с ТЗ и roadmap.</p><a href="/KILN_TECHNICAL_SPECIFICATION.md" download>Скачать ТЗ <ArrowUpRight size={13} /></a></div>
@@ -53,14 +53,14 @@ export default function TaskCatalog({ onOpenTask, status = "active", type = "all
           <div className="ws-search"><Search size={16} /><input id="ws-task-search" type="search" aria-label="Поиск задач, экранов и файлов" placeholder="Задача, экран или файл…" value={query} onChange={(event) => changeQuery(event.target.value)} />{query && <button aria-label="Очистить поиск" onClick={() => changeQuery("")}><X size={15} /></button>}</div>
         </div>
         <div className="ws-catalog-controls"><div className="ws-epic-filter">Блок <CatalogSelect label="Блок реализации" value={epic} onChange={(value) => { setEpic(value); setPage(1); }} options={[{ value: "all", label: "Все блоки" }, ...availableEpics.map((item) => ({ value: item.id, label: `${item.id} · ${item.title}` }))]} /></div><Pagination page={currentPage} pageCount={pageCount} onChange={changePage} /></div>
-        <div className={`ws-list-meta ${isCompleted ? "completed" : ""}`}><span aria-live="polite">{results.length} из {scopedTasks.length} задач{results.length > PAGE_SIZE && ` · показаны ${(currentPage - 1) * PAGE_SIZE + 1}–${Math.min(currentPage * PAGE_SIZE, results.length)}`}</span><span>{activeStream ? `${scopedTasks.filter((task) => task.status === "completed").length} из ${scopedTasks.length} готово` : <>{isCompleted ? <Check size={12} /> : <i />}{isCompleted ? "Выполнено" : "Запланировано"}</>}</span></div>
-        <div className="ws-column-labels"><span>ЗАДАЧА / {isCompleted ? "ГОТОВЫЙ" : "ОЖИДАЕМЫЙ"} РЕЗУЛЬТАТ</span><span>ПРИОРИТЕТ</span><span>{activeStream ? "ГОТОВО / СРОК" : isCompleted ? "ГОТОВО" : "ДЕДЛАЙН"}</span><span /></div>
+        <div className={`ws-list-meta ${isCompleted ? "completed" : ""}`}><span aria-live="polite">{results.length} из {scopedTasks.length} задач{results.length > PAGE_SIZE && ` · показаны ${(currentPage - 1) * PAGE_SIZE + 1}–${Math.min(currentPage * PAGE_SIZE, results.length)}`}</span><span>{status === "all" ? `${results.filter((task) => task.status === "completed").length} из ${results.length} выполнено` : <>{isCompleted ? <Check size={12} /> : <i />}{isCompleted ? "Выполнено" : "Запланировано"}</>}</span></div>
+        <div className="ws-column-labels"><span>ЗАДАЧА / {isCompleted ? "ГОТОВЫЙ" : "ОЖИДАЕМЫЙ"} РЕЗУЛЬТАТ</span><span>ПРИОРИТЕТ</span><span>{status === "all" ? "ГОТОВО / СРОК" : isCompleted ? "ГОТОВО" : "ДЕДЛАЙН"}</span><span /></div>
         {groups.map((group) => (
           <section key={group.id} className="ws-task-group" aria-labelledby={`type-${group.id}`}>
             <div className="ws-group-heading"><h3 id={`type-${group.id}`}>{group.label}<span>{group.tasks.length}</span></h3><span>{group.owner}</span></div>
             {group.tasks.map((task) => (
               <button key={task.id} className={`ws-task-row ${task.status === "completed" ? "completed" : ""}`} onClick={() => onOpenTask(task)} aria-label={`${task.id}: ${task.title}. ${task.status === "completed" ? "Выполнено. " : ""}Открыть подробности`}>
-                <span className="ws-task-summary"><span className="ws-task-id">{task.id}</span><strong>{task.title}</strong><span className="ws-task-excerpt">{activeStream && task.status === "completed" && <span className="ws-task-completion"><Check size={12} /> Выполнено · </span>}{task.result}</span></span>
+                <span className="ws-task-summary"><span className="ws-task-id">{task.id}</span><strong>{task.title}</strong><span className="ws-task-excerpt">{task.status === "completed" && <span className="ws-task-completion"><Check size={12} /> Выполнено</span>}{task.result}</span></span>
                 <span className={`ws-priority ${task.priority === "P1" ? "secondary" : ""}`}>{task.priority}</span>
                 <time dateTime={task.status === "completed" ? task.completedAt : task.due}>{formatDate(task.status === "completed" ? task.completedAt : task.due)}</time><ChevronRight size={17} />
               </button>

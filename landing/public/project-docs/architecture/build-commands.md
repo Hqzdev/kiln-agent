@@ -1,6 +1,10 @@
 # Архитектура: как собирать сайт и продукт
 
-Задача: A2.8. Дата: 11 октября 2026. Документ готов. Цели сборки продукта и build-all.sh ещё нужно создать.
+Задача: A2.8. Дата: 11 октября 2026. Документы и настройки подготовлены; задача целиком требует реализации пользователя.
+
+## Что подготовлено без кода приложения
+
+Команды подготовки и сборки перечислены ниже. Собственные shell- и Python-скрипты помощника удалены. Используются стандартные xcodebuild, SwiftPM, Gradle Wrapper и npm. Сборка пустых пакетов и bootJar без пользовательского главного класса пока не является рабочей командой продукта. Единый build-all.sh пользователь пишет после появления всех частей. Предыдущие результаты проверки удалённой реализации не считаются подтверждением нынешнего состояния.
 
 ## Команды существующего сайта
 
@@ -32,8 +36,8 @@ swift test --package-path packages/KilnGraph
 После создания общих схем Xcode можно собрать Mac и посмотреть доступные устройства для iOS:
 
 ```bash
-xcodebuild -project apps/macos/KilnMac.xcodeproj -scheme KilnMac -destination 'platform=macOS' build
-xcodebuild -project apps/ios/KilnIOS.xcodeproj -scheme KilnIOS -showdestinations
+xcodebuild -project apps/Kiln.xcodeproj -scheme KilnMac -destination 'platform=macOS' build
+xcodebuild -project apps/Kiln.xcodeproj -scheme KilnIOS -showdestinations
 ```
 
 Из списка iOS выбирается существующий симулятор. Его ID используется для сборки и тестов. Связь устройств проверяется отдельно на настоящем iPhone.

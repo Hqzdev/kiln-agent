@@ -1,0 +1,13 @@
+[versions]
+spring-boot = "4.1.1"
+sqlite = "3.53.4.0"
+jackson = "2.20.0"
+junit = "5.13.4"
+spotless = "7.2.1"
+[libraries]
+sqlite = { module = "org.xerial:sqlite-jdbc", version.ref = "sqlite" }
+jackson = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }

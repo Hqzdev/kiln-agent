@@ -1,1 +1,0 @@
-Kiln isn't one agent. It's a team: an orchestrator plus engineer, designer, researcher, reviewer and QA agents that pass real work to each other, and every hand-off is a message you can open. One intelligence. Many specialists. One team.

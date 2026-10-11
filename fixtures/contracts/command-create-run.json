@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "commandId": "7a2d9e90-cc71-4d13-909e-86c3aa1a8cb1",
+  "type": "run.create",
+  "projectId": "8a0f0ac0-ae54-4f1f-afbc-157ad34bf7ce",
+  "expectedVersion": 3,
+  "payload": {
+    "goal": "Исправить сумму корзины"
+  }
+}

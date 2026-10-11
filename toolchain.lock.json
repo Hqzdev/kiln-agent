@@ -1,0 +1,23 @@
+{
+  "javaVersion": "25.0.4.1+1",
+  "javaMajor": 25,
+  "jdkMacArm64": {
+    "url": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.4.1%2B1/OpenJDK25U-jdk_aarch64_mac_hotspot_25.0.4.1_1.tar.gz",
+    "sha256": "61979887f7506a24a57439ff99adb8b3a7fc89977d9cfe3b8984f58a981b7b9d",
+    "home": ".build/tools/jdk-25.0.4.1+1/Contents/Home"
+  },
+  "gradleVersion": "9.1.0",
+  "gradleDistributionSha256": "a17ddd85a26b6a7f5ddb71ff8b05fc5104c0202c6e64782429790c933686c806",
+  "xcodeVersion": "27.0",
+  "xcodeBuild": "27A5252f",
+  "swiftVersion": "6.4",
+  "minimumMacOS": "26.0",
+  "minimumIOS": "26.0",
+  "schemaVersion": 1,
+  "sources": [
+    "https://docs.gradle.org/9.1.0/release-notes.html",
+    "https://docs.spring.io/spring-boot/system-requirements.html",
+    "https://github.com/adoptium/temurin25-binaries/releases",
+    "https://github.com/xerial/sqlite-jdbc/releases"
+  ]
+}
