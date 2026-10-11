@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { MousePointer2, Volume2, VolumeX } from "lucide-react";
 import { play, setMuted, useMuted } from "@/lib/sound";
-import { KilnArch } from "./ui";
+import { BuddyFace } from "./buddy";
 
 // G1 — white overlay until assets are ready, fades 500ms, then leaves layout.
 export function Loader() {
@@ -24,7 +24,7 @@ export function Loader() {
   if (state === "off") return null;
   return (
     <div className={`loader ${state === "fading" ? "done" : ""}`}>
-      <KilnArch size={36} stroke="#0D0D0D" ember="#E5484D" />
+      <BuddyFace size={36} stroke="#0D0D0D" ember="#E5484D" />
     </div>
   );
 }
@@ -55,7 +55,7 @@ export function Nav() {
   }, [path]);
 
   return (
-    <div className={`nav-wrap ${hidden ? "hidden" : ""}`}>
+    <div className={`nav-wrap ${hidden ? "hidden" : ""} ${path.startsWith("/workspace") ? "workspace-nav" : ""}`}>
       <nav className="nav">
         {LINKS.map((l) => {
           const active = l.href === "/" ? path === "/" : path.startsWith(l.href);
@@ -78,6 +78,21 @@ export function Nav() {
         </button>
       </nav>
     </div>
+  );
+}
+
+export function Footer({ className = "" }) {
+  return (
+    <footer className={`footer ${className}`}>
+      <span className="label"><i style={{ background: "var(--ember)" }} />Kiln · 2026</span>
+      <nav aria-label="Ссылки в футере">
+        <Link href="/workspace" onClick={() => play("nav")}>Задачи</Link>
+        <a href="/KILN_TECHNICAL_SPECIFICATION.md" download>Скачать техническое задание ↓</a>
+        {[["/changelog", "Changelog"], ["/docs", "Docs"], ["/privacy", "Privacy"], ["/github", "GitHub"], ["/contact", "Contact"]].map(([href, label]) => (
+          <Link key={href} href={href} onClick={() => play("nav")}>{label}</Link>
+        ))}
+      </nav>
+    </footer>
   );
 }
 
@@ -108,14 +123,7 @@ export function Stage({ children, hint = true }) {
           <div style={{ height: 56 }} />
         )}
         {children}
-        <footer className="footer">
-          <span className="label"><i style={{ background: "var(--ember)" }} />Kiln · 2026</span>
-          <nav>
-            {[["/changelog", "Changelog"], ["/docs", "Docs"], ["/privacy", "Privacy"], ["/github", "GitHub"], ["/contact", "Contact"]].map(([h, l]) => (
-              <Link key={h} href={h} onClick={() => play("nav")}>{l}</Link>
-            ))}
-          </nav>
-        </footer>
+        <Footer />
       </div>
     </main>
   );

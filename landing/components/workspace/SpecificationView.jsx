@@ -1,0 +1,20 @@
+import { ArrowDownToLine, ExternalLink, ChevronDown } from "lucide-react";
+import { documentationIndex } from "@/lib/workspace/documentation.mjs";
+import { projectPlan } from "@/lib/workspace/data.mjs";
+import { specification, epics, testMatrix, finalScenario, sources } from "@/lib/workspace/specification.mjs";
+
+export default function SpecificationView() {
+  return (
+    <div className="ws-specification">
+      <aside className="ws-spec-toc"><span className="ws-sidebar-title">В ЭТОМ ДОКУМЕНТЕ</span><nav aria-label="Содержание технического задания">{specification.chapters.map((chapter) => <a key={chapter.id} href={`#spec-${chapter.id}`}>{chapter.title.replace(/^\d+\. /, "")}</a>)}<a href="#spec-decomposition">Полная декомпозиция</a><a href="#spec-testing">Матрица тестирования</a><a href="#spec-acceptance">Финальная приёмка</a></nav></aside>
+      <article className="ws-spec-body">
+        <div className="ws-spec-cover"><span className="ws-eyebrow">ТЕХНИЧЕСКОЕ ЗАДАНИЕ · {specification.version}</span><h2>Как будет работать Kiln.</h2><p>{specification.introduction}</p><a className="ws-button primary" href="/KILN_TECHNICAL_SPECIFICATION.md" download><ArrowDownToLine size={16} /> Скачать полный документ <span>MD</span></a><p className="ws-spec-cover-note">В файле также {projectPlan.tasks.length} карточек подзадач, {projectPlan.workPackages.length} пакетов работ и roadmap с датами.</p><a className="ws-spec-architecture-link" href={documentationIndex.href}>Архитектура: 22 подготовленных MD <ExternalLink size={13} /></a></div>
+        {specification.chapters.map((chapter) => <section key={chapter.id} id={`spec-${chapter.id}`} className="ws-spec-chapter"><h3>{chapter.title}</h3>{chapter.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}<ul>{chapter.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul></section>)}
+        <section id="spec-decomposition" className="ws-spec-chapter"><h3>14. Полная декомпозиция реализации</h3><p>Все 405 пунктов из 24 блоков перенесены в каталог задач. У каждой подзадачи есть карточка, срок, файлы и проверка. Прежние 50 карточек сохранены как подробные пакеты работ.</p><div className="ws-epics">{epics.map((epic) => <details key={epic.id}><summary><span className="ws-task-id">{epic.id}</span><strong>{epic.title}</strong><span>{epic.tasks.length}</span><ChevronDown size={15} /></summary><ul>{epic.tasks.map((task) => <li key={task.id}><code>{task.id}</code><span>{task.title}</span></li>)}</ul></details>)}</div></section>
+        <section id="spec-testing" className="ws-spec-chapter"><h3>15. Матрица тестирования всего проекта</h3><p>Каждая проверка сохраняет результат и доказательство. Fixtures дополняются реальным GigaChat и физическими устройствами.</p><div className="ws-test-table-wrap" tabIndex={0} role="region" aria-label="Матрица проверок с горизонтальной прокруткой"><table className="ws-test-table"><thead><tr>{["Область", "Сценарий", "Уровень", "Ожидаемый результат"].map((heading) => <th key={heading}>{heading}</th>)}</tr></thead><tbody>{testMatrix.map((row) => <tr key={row[0]}>{row.map((cell, index) => <td key={index}>{cell}</td>)}</tr>)}</tbody></table></div></section>
+        <section id="spec-acceptance" className="ws-spec-chapter"><h3>16. Финальная приёмка · 15 декабря</h3><p>Проходим сценарий целиком на чистой установке Mac и физическом iPhone. Дефекты с блокирующим приоритетом не допускаются к сдаче.</p><ol className="ws-acceptance-list">{finalScenario.map((step) => <li key={step}>{step}</li>)}</ol></section>
+        <section className="ws-spec-chapter"><h3>Официальные источники</h3><p>При выборе конкретных версий API и SDK повторно проверяем действующие требования.</p><div className="ws-source-list">{sources.map((source) => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.title}<ExternalLink size={13} /></a>)}</div></section>
+      </article>
+    </div>
+  );
+}

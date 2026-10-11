@@ -270,8 +270,9 @@ svg { flex-shrink: 0; }
 .u { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
 
 /* ---------- footer ---------- */
-.footer { display: flex; justify-content: space-between; align-items: center; padding: 80px 8px 56px; }
-.footer nav { display: flex; gap: 28px; font-size: 14px; color: var(--text-2); }
+.footer { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 80px 8px 56px; }
+.footer nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 16px 24px; font-size: 14px; color: var(--text-2); }
+.footer > .label { flex-shrink: 0; }
 .footer nav a:hover { color: var(--text); }
 
 /* ---------- small screens: reflow to two columns ---------- */

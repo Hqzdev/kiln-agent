@@ -13,6 +13,7 @@ import { siApple, siGithub } from "simple-icons";
 import {
   Traffic, Badge, Btn, Chip, Step, Approval, Composer, DiffLine, PlanItem, Changes, TerminalBlock, KilnArch, Brand, Toggle,
 } from "./ui";
+import { KilnBuddy } from "./buddy";
 
 export const SCREEN_W = 1200;
 export const SCREEN_H = 750;
@@ -79,7 +80,7 @@ function NewTask() {
       <main className="main">
         <Head><Spacer /><Ico icon={History} /><Ico icon={Ellipsis} /></Head>
         <div className="hero">
-          <KilnArch size={44} stroke="var(--text-3)" ember="var(--text-3)" weight={5} />
+          <KilnBuddy size={44} stroke="var(--text-3)" ember="var(--text-3)" weight={5} />
           <p className="hero-t">What should we build in tradr?</p>
           <p className="mono" style={{ fontSize: 12, color: "var(--text-3)" }}>main · 2 uncommitted files · last run 2h ago</p>
           <div style={{ display: "flex", gap: 8, paddingTop: 8 }}>
@@ -414,7 +415,7 @@ function Login() {
       <div className="mhead" style={{ borderBottom: 0, padding: "0 18px" }}><Traffic /></div>
       <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", paddingBottom: 40 }}>
         <div style={{ width: 340, display: "flex", flexDirection: "column", alignItems: "center", gap: 20 }}>
-          <KilnArch size={40} stroke="var(--text)" ember="var(--text)" weight={6} />
+          <KilnBuddy size={40} stroke="var(--text)" ember="var(--text)" weight={6} />
           <div style={{ textAlign: "center" }}>
             <b style={{ fontSize: 26, fontWeight: 600, letterSpacing: -0.5 }}>Welcome back</b>
             <p style={{ fontSize: 14, color: "var(--text-2)", marginTop: 6 }}>Log in to pick up your tasks where Kiln left off.</p>

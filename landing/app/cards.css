@@ -30,7 +30,6 @@
   left: 40px; top: 60px; width: 420px; height: 640px; rotate: -7deg;
   display: flex; flex-direction: column; gap: 16px; padding: 0 20px 20px;
 }
-.fake-cursor { position: absolute; left: 0; top: 0; pointer-events: none; z-index: 3; filter: drop-shadow(0 2px 3px #0006); }
 
 /* 4 Builder */
 .builder .flood {
@@ -228,7 +227,6 @@
 .dl-in { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 24px; }
 .dl-in b { font-size: 18px; font-weight: 600; color: #ececec; }
 .dl-icon { display: block; }
-.dl-card:hover .dl-icon { rotate: 360deg; transition: rotate 800ms var(--out-back); }
 .dl-btn-wrap { position: relative; width: 100%; }
 .dl-btn {
   height: 44px; width: 100%; border-radius: 22px; background: #ececec; color: #121212;

@@ -3,6 +3,7 @@ import {
   Sparkle, X, CheckCheck, Play, GitCompare, Eye, FileCode, Terminal, CircleCheck, CircleDot, Circle,
 } from "lucide-react";
 import { siGithub } from "simple-icons";
+import { BuddyFace } from "./buddy";
 
 export function Brand({ icon, size = 24, color = "currentColor" }) {
   return (
@@ -27,7 +28,7 @@ export function KilnArch({ size = 56, stroke = "#EDEDED", ember = "#EDEDED", wei
   );
 }
 
-export function AppIcon({ size = 88 }) {
+export function AppIcon({ size = 88, happy = false }) {
   return (
     <div
       style={{
@@ -36,7 +37,7 @@ export function AppIcon({ size = 88 }) {
         boxShadow: "0 6px 18px #00000080",
       }}
     >
-      <KilnArch size={size * 0.44} />
+      <BuddyFace size={size * 0.44} happy={happy} />
     </div>
   );
 }

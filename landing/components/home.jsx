@@ -15,6 +15,7 @@ import {
   Label, Badge, Traffic, Btn, Step, Approval, Composer, DiffLine, PlanItem, Changes, TerminalBlock,
   Brand, GithubMark, KilnArch, AppIcon,
 } from "./ui";
+import { KilnBuddy, Jump, useHover } from "./buddy";
 import { play } from "@/lib/sound";
 
 const OUT_BACK = [0.175, 0.885, 0.32, 1.275];
@@ -122,7 +123,7 @@ export function Tasks() {
             onMouseEnter={() => setTip(i)}
             onMouseLeave={() => setTip(null)}
           >
-            {icon === null ? <KilnArch size={22} weight={3.5} /> : icon === "term" ? <SquareTerminal size={26} /> : <Brand icon={icon} size={24} />}
+            {icon === null ? <KilnBuddy active={tip === i} size={24} weight={4} /> : icon === "term" ? <SquareTerminal size={26} /> : <Brand icon={icon} size={24} />}
             <AnimatePresence>
               {tip === i && (
                 <motion.span className="tooltip" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.1 }}>
@@ -137,19 +138,8 @@ export function Tasks() {
   );
 }
 
-/* 3 — Agent window crop: a cursor inside the window follows the real one */
+/* 3 — Agent window crop */
 export function AgentCrop() {
-  const mx = useMotionValue(0.5);
-  const my = useMotionValue(0.5);
-  const sx = useSpring(mx, { stiffness: 260, damping: 30 });
-  const sy = useSpring(my, { stiffness: 260, damping: 30 });
-  const cx = useTransform(sx, [0, 1], [120 - 135, 120 + 135]);
-  const cy = useTransform(sy, [0, 1], [300 - 275, 300 + 275]);
-  useEffect(() => {
-    const on = (e) => { mx.set(e.clientX / innerWidth); my.set(e.clientY / innerHeight); };
-    addEventListener("pointermove", on, { passive: true });
-    return () => removeEventListener("pointermove", on);
-  }, [mx, my]);
   return (
     <Card h={2} caption={{ title: "Agent", text: "plans, edits, asks" }}>
       <div className="window dark crop-agent">
@@ -162,9 +152,6 @@ export function AgentCrop() {
         <p className="agent-msg">Комиссия округляется до умножения на лоты. Переношу округление в конец.</p>
         <Approval />
         <Composer ctx={[]} placeholder="Reply to steer Kiln" />
-        <motion.svg className="fake-cursor" style={{ x: cx, y: cy }} width="22" height="28" viewBox="0 0 22 28">
-          <path d="M2 2 L2 22 L7.5 17 L11 25 L14.5 23.5 L11 15.8 L18.5 15.8 Z" fill="#fff" stroke="#000" strokeWidth="1.6" strokeLinejoin="round" />
-        </motion.svg>
       </div>
     </Card>
   );
@@ -637,10 +624,11 @@ export function Sandbox() {
 
 /* 15 — Download: the icon flips, a tooltip pops above the button */
 export function DownloadCard() {
+  const [hover, bind] = useHover();
   return (
-    <Card arrow={false} className="dl-card dark" onMouseEnter={() => play("nock")}>
+    <Card arrow={false} className="dl-card dark" onMouseEnter={() => { bind.onMouseEnter(); play("nock"); }} onMouseLeave={bind.onMouseLeave}>
       <div className="dl-in">
-        <span className="dl-icon"><AppIcon size={88} /></span>
+        <Jump active={hover} height={88} className="dl-icon"><AppIcon size={88} happy={hover} /></Jump>
         <b>Kiln for macOS</b>
         <span className="dl-btn-wrap">
           <span className="dl-tip mono">Kiln-1.4.dmg · 48 MB</span>
