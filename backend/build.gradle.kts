@@ -14,7 +14,11 @@ subprojects {
     }
     tasks.withType<Test>().configureEach {
         useJUnitPlatform()
-        systemProperty("kiln.fixtures", rootProject.file("../fixtures/contracts").absolutePath)
+        if (project.name in listOf("infrastructure", "api")) {
+            jvmArgs("--enable-native-access=ALL-UNNAMED")
+        }
+        systemProperty("blot.httpFixtures", rootProject.file("../.build/http-fixtures").absolutePath)
+        systemProperty("blot.fixtures", rootProject.file("../fixtures/contracts").absolutePath)
     }
     configure<com.diffplug.gradle.spotless.SpotlessExtension> {
         java { googleJavaFormat("1.28.0") }

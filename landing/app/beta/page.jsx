@@ -3,7 +3,7 @@ import { Signup, WhatYouGet, FirstWave, Faq } from "@/components/pages";
 import { Builder } from "@/components/home";
 import { ScreensWallet } from "@/components/wallet";
 
-export const metadata = { title: "Beta — Kiln" };
+export const metadata = { title: "Beta — Blot" };
 
 export default function Beta() {
   return (

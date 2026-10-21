@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-21",
+  "wireSchemaVersion": 2,
+  "workspaceSchemaVersion": 8,
+  "javaTests": {
+    "application": {
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "infrastructure": {
+      "tests": 33,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "api": {
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "javaTestsTotal": 49,
+  "swiftApiTests": 23,
+  "swiftDomainTests": 2,
+  "formatCheck": "passed",
+  "dependencyVerification": "strict",
+  "bootJar": "passed",
+  "macUnsignedBuild": "passed",
+  "iosSimulatorUnsignedBuild": "passed",
+  "packagedApplicationLaunchedInFinalPass": false,
+  "visualUIRun": false,
+  "javaSourceFiles": 202,
+  "javaSourceDigest": "32d1207f82ff9d42b4142f72cfdc8c866caac2671c7a1a647bac91235340b269",
+  "macAndApiSwiftSourceFiles": 148,
+  "macAndApiSwiftSourceDigest": "b8e71a4cc7d57571ea6c321bc6e2767b435098a7e3dbe475eb57440920126229",
+  "bootJarSha256": "b549110909b551bec88b184c65ec3a979d148e7fe64b90d911aa8ed656be1d5d",
+  "implementedMacBindings": [
+    "Code tasks and planning",
+    "team sessions and Motes",
+    "messages and inbox",
+    "permission decisions",
+    "artifacts and independent reviews",
+    "commit and push preparation, grants and execution",
+    "graph with source records",
+    "skill CRUD",
+    "schedule CRUD, manual run and real history",
+    "snapshot and SSE recovery",
+    "account cache reset"
+  ],
+  "pendingAcceptance": [
+    "live SMTP",
+    "live GigaChat",
+    "prepared macOS VM with Java/Gradle and Swift/Xcode",
+    "Wi-Fi/BLE on physical iPhone",
+    "properly signed packaged application and visual UI acceptance",
+    "phone commit/push preparation and execution controls"
+  ]
+}

@@ -11,7 +11,7 @@ const listeners = new Set();
 
 if (typeof window !== "undefined") {
   try {
-    const saved = localStorage.getItem("kiln-sound");
+    const saved = localStorage.getItem("blot-sound");
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     muted = saved === null ? reduce : saved === "off";
   } catch {}
@@ -81,7 +81,7 @@ export function play(name) {
 
 export function setMuted(v) {
   muted = v;
-  try { localStorage.setItem("kiln-sound", v ? "off" : "on"); } catch {}
+  try { localStorage.setItem("blot-sound", v ? "off" : "on"); } catch {}
   listeners.forEach((l) => l());
 }
 

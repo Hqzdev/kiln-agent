@@ -19,7 +19,7 @@
   position: relative; width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center;
   background: var(--surface); border: 1px solid var(--border); color: var(--text);
 }
-.dock-tile.kiln { background: #171717; border: 2px solid var(--text); }
+.dock-tile.blot { background: #171717; border: 2px solid var(--text); }
 .tooltip {
   position: absolute; bottom: calc(100% + 8px); left: 50%; translate: -50% 0; z-index: 10;
   padding: 4px 8px; border-radius: 6px; background: #000; color: #fff; font-size: 12px; white-space: nowrap; pointer-events: none;
@@ -59,6 +59,15 @@
 .builder:hover .avatar { border-color: #ffffff40; }
 .builder:hover .follow { background: transparent; color: #fff; border-color: #ffffff4d; }
 .builder:hover .follow:hover { background: #fff; color: #000; }
+.build-prog { display: flex; flex-direction: column; gap: 7px; }
+.build-prog .bp-top { display: flex; align-items: baseline; justify-content: space-between; }
+.build-prog b { font-size: 30px; font-weight: 600; letter-spacing: -1px; color: var(--text); font-variant-numeric: tabular-nums; transition: color 220ms; }
+.build-prog .bp-top span, .build-prog .bp-cap { font-size: 11px; color: var(--text-3); transition: color 220ms; }
+.build-prog .bp-bar { height: 6px; border-radius: 3px; background: #0000000f; overflow: hidden; transition: background 220ms; }
+.build-prog .bp-bar i { display: block; height: 100%; border-radius: 3px; background: var(--ember); }
+.builder:hover .build-prog b { color: #fff; }
+.builder:hover .build-prog .bp-top span, .builder:hover .build-prog .bp-cap { color: #ffffff8c; }
+.builder:hover .build-prog .bp-bar { background: #ffffff26; }
 
 /* 5 Prompt stack */
 .prompt-card { cursor: pointer; }
@@ -178,7 +187,7 @@
 .local-in b { font-size: 76px; font-weight: 700; letter-spacing: -3px; color: var(--ghost); line-height: 1.1; }
 .local-in span { font-size: 22px; font-weight: 500; letter-spacing: -0.4px; color: var(--ghost); }
 
-/* 12 Kiln mark */
+/* 12 Blot mark */
 .mark-card .arch {
   position: absolute; left: 72px; top: 44px; width: 136px; height: 168px; border-radius: 68px 68px 10px 10px;
   border: 14px solid var(--ghost); transition: translate 400ms var(--out-back), border-color 500ms ease;
@@ -244,3 +253,6 @@
 .headline { display: flex; align-items: baseline; white-space: nowrap; }
 .flip { position: relative; display: inline-grid; overflow: hidden; padding-bottom: 10px; margin-bottom: -10px; }
 .flip-item { grid-area: 1 / 1; white-space: pre; }
+
+.gh-prog { padding: 14px 16px; border-radius: 16px; background: var(--surface); }
+.gh-prog .bp-bar { background: var(--surface-2); }

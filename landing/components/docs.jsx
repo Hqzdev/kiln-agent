@@ -5,28 +5,27 @@ import { motion, AnimatePresence } from "motion/react";
 import { Search, Copy, Check, Info, TriangleAlert, ArrowRight } from "lucide-react";
 import { Label, Badge } from "./ui";
 import { play } from "@/lib/sound";
+import { useClipboard } from "@/lib/useClipboard";
+import FormFeedback from "./FormFeedback";
 
 /* ---------- shared bits for long-form pages ---------- */
 export function Code({ lang = "bash", children }) {
-  const [ok, setOk] = useState(false);
-  const copy = async () => {
-    try { await navigator.clipboard.writeText(children.trim()); } catch {}
-    setOk(true); play("tick");
-    setTimeout(() => setOk(false), 1400);
-  };
+  const { state, copy } = useClipboard(children.trim());
+  const ok = state === "copied";
   return (
     <div className="code-block dark">
       <div className="cb-head">
         <span className="mono">{lang}</span>
-        <button onClick={copy} className="cb-copy" aria-label="Copy">
+        <button type="button" onClick={copy} disabled={state === "copying"} className="cb-copy" aria-label={ok ? "Copied to clipboard" : "Copy code"}>
           <AnimatePresence mode="wait" initial={false}>
             <motion.span key={String(ok)} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.12 }}>
-              {ok ? <><Check size={13} />Copied</> : <><Copy size={13} />Copy</>}
+              {ok ? <><Check size={13} />Copied</> : <><Copy size={13} />{state === "copying" ? "Copying…" : "Copy"}</>}
             </motion.span>
           </AnimatePresence>
         </button>
       </div>
       <pre>{children.trim()}</pre>
+      <FormFeedback error={state === "error"}>{state === "error" ? "Could not copy. Select the code and copy it manually." : ok ? "Code copied to clipboard." : ""}</FormFeedback>
     </div>
   );
 }
@@ -123,7 +122,7 @@ export function DocsPage() {
       <aside className="docs-nav">
         <label className="docs-search">
           <Search size={14} color="var(--text-3)" />
-          <input id="docs-q" placeholder="Search docs" value={q} onChange={(e) => setQ(e.target.value)} />
+          <input id="docs-q" type="search" aria-label="Search documentation" placeholder="Search docs" value={q} onChange={(e) => setQ(e.target.value)} />
           <Kbd>/</Kbd>
         </label>
         {filtered.map(([g, items]) => (
@@ -143,15 +142,15 @@ export function DocsPage() {
       <article className="prose">
         <header className="prose-head">
           <Label dot="var(--ember)">Docs · v1.4</Label>
-          <h1>Kiln documentation</h1>
+          <h1>Blot documentation</h1>
           <p className="lead">Everything you need to go from download to your first merged diff. Ten minutes, start to finish.</p>
         </header>
 
         <Reveal id="install">
           <h2>Install</h2>
-          <p>Kiln runs on Apple silicon Macs with macOS 14 Sonoma or newer. Download the beta, drag Kiln to Applications, open it and sign in.</p>
-          <Code lang="bash">{`brew install --cask kiln`}</Code>
-          <Note>Kiln keeps everything it needs in <code>~/Library/Kiln</code>. Uninstalling the app and deleting that folder removes all local history.</Note>
+          <p>Blot runs on Apple silicon Macs with macOS 14 Sonoma or newer. Download the beta, drag Blot to Applications, open it and sign in.</p>
+          <Code lang="bash">{`brew install --cask blot`}</Code>
+          <Note>Blot keeps everything it needs in <code>~/Library/Blot</code>. Uninstalling the app and deleting that folder removes all local history.</Note>
         </Reveal>
 
         <Reveal id="first-task">
@@ -159,22 +158,22 @@ export function DocsPage() {
           <ol>
             <li>Press <Kbd>⌘</Kbd><Kbd>N</Kbd> and pick a project folder.</li>
             <li>Describe the job the way you would to a teammate: <em>“PnL drifts by a cent on 7 lots — find out why and fix it.”</em></li>
-            <li>Kiln reads the repo, writes a plan and starts working. You can reply at any point to steer it.</li>
+            <li>Blot reads the repo, writes a plan and starts working. You can reply at any point to steer it.</li>
             <li>When it&apos;s done, open <strong>Review</strong>, read the diff, then commit or open a PR.</li>
           </ol>
-          <Note>Kiln never merges on its own. Every task ends as a diff that waits for you.</Note>
+          <Note>Blot never merges on its own. Every task ends as a diff that waits for you.</Note>
         </Reveal>
 
         <Reveal id="projects">
           <h2>Projects &amp; worktrees</h2>
           <p>A project is any folder with a git repository. Each task runs in its own git worktree, so up to three tasks can work in parallel without touching your working copy or each other.</p>
-          <Code lang="bash">{`# where Kiln keeps task worktrees
-~/Library/Kiln/worktrees/<project>/<task-id>`}</Code>
+          <Code lang="bash">{`# where Blot keeps task worktrees
+~/Library/Blot/worktrees/<project>/<task-id>`}</Code>
         </Reveal>
 
         <Reveal id="approvals">
           <h2>Sandbox &amp; approvals</h2>
-          <p>Commands run in an isolated shell. The sandbox mode decides what Kiln may change without asking:</p>
+          <p>Commands run in an isolated shell. The sandbox mode decides what Blot may change without asking:</p>
           <div className="table">
             <div className="tr th"><span>Mode</span><span>Edits files</span><span>Network</span><span>Outside the project</span></div>
             <div className="tr"><span><Badge>Read-only</Badge></span><span>Asks</span><span>Asks</span><span>Never</span></div>
@@ -187,7 +186,7 @@ export function DocsPage() {
         <Reveal id="allow-list">
           <h2>Allow list</h2>
           <p>Commands on the allow list run without a prompt. Click <strong>Always allow</strong> on any approval, or edit the list directly:</p>
-          <Code lang="toml">{`# ~/.kiln/config.toml
+          <Code lang="toml">{`# ~/.blot/config.toml
 [approvals]
 mode = "workspace"
 network = "ask"
@@ -201,9 +200,9 @@ command = "git status"`}</Code>
 
         <Reveal id="models">
           <h2>Models &amp; keys</h2>
-          <p>Kiln 1 is the default and is included in the beta. You can switch the model per task or bring your own key for Anthropic, OpenAI, Google or a local Ollama model. Keys live in the macOS Keychain.</p>
-          <Code lang="bash">{`kiln models add anthropic   # prompts for the key, stores it in Keychain
-kiln models default kiln-1 --effort high`}</Code>
+          <p>Blot 1 is the default and is included in the beta. You can switch the model per task or bring your own key for Anthropic, OpenAI, Google or a local Ollama model. Keys live in the macOS Keychain.</p>
+          <Code lang="bash">{`blot models add anthropic   # prompts for the key, stores it in Keychain
+blot models default blot-1 --effort high`}</Code>
         </Reveal>
 
         <Reveal id="automations">
@@ -221,7 +220,7 @@ prompt: |
 
         <Reveal id="skills">
           <h2>Skills</h2>
-          <p>A skill is a folder with a <code>SKILL.md</code> file. Kiln loads it when a task matches its description, so your conventions travel with every task.</p>
+          <p>A skill is a folder with a <code>SKILL.md</code> file. Blot loads it when a task matches its description, so your conventions travel with every task.</p>
           <Code lang="markdown">{`---
 name: release-notes
 description: Draft the weekly changelog from merged PRs

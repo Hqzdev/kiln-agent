@@ -33,6 +33,9 @@ export class ProjectPlan {
   get completedTasks() { return this.#tasks.filter((task) => task.status === "completed"); }
   get remainingTasks() { return this.#tasks.filter((task) => task.status !== "completed"); }
   getTask(id) { return this.#index.get(id); }
+  getUnfinishedDependencies(task) { return task.dependencies.map((id) => this.getTask(id)).filter((item) => item.status !== "completed"); }
+  canStart(task) { return task.status !== "completed" && this.getUnfinishedDependencies(task).length === 0; }
+  get readyTasks() { return this.remainingTasks.filter((task) => this.canStart(task)); }
   getType(id) { return this.#types.find((type) => type.id === id); }
   getTasksForStatus(status = "all") { return status === "completed" ? this.completedTasks : status === "active" ? this.remainingTasks : this.#tasks; }
   getTasksForType(type, { status = "all" } = {}) { return this.getTasksForStatus(status).filter((task) => task.type === type); }
@@ -48,7 +51,7 @@ export class ProjectPlan {
       if (stream !== "all" && task.streamId !== stream) return false;
       const text = [task.id, task.title, task.goal, task.result, task.epicTitle, ...task.workPackageIds, this.getType(task.type).label, ...task.screens, ...task.files.map((file) => `${file.path} ${file.purpose}`)].join(" ").toLocaleLowerCase("ru");
       return terms.every((term) => text.includes(term));
-    }).sort((a, b) => this.#types.findIndex((type) => type.id === a.type) - this.#types.findIndex((type) => type.id === b.type));
+    }).sort((a, b) => a.planOrder - b.planOrder);
   }
 }
 

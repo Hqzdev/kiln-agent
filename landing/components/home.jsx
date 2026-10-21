@@ -1,26 +1,27 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import {
   motion, AnimatePresence, useInView, useScroll, useTransform, useMotionValue, useSpring, useReducedMotion,
 } from "motion/react";
 import {
   Wrench, FileUp, FlaskConical, BookOpen, Flame, Command, CornerDownLeft, GitPullRequest, Package, Bug,
-  ArrowDown, ArrowUpRight, GitMerge, Download, FileText, Search, Terminal, Pencil, CircleCheck,
+  ArrowDown, ArrowUpRight, GitMerge, FileText, Search, Terminal, Pencil, CircleCheck,
   GitCommitHorizontal, Trash2, Loader, SquareTerminal,
 } from "lucide-react";
 import { siGithub, siGit, siLinear, siFigma, siNotion, siVercel } from "simple-icons";
 import Card from "./Card";
 import {
   Label, Badge, Traffic, Btn, Step, Approval, Composer, DiffLine, PlanItem, Changes, TerminalBlock,
-  Brand, GithubMark, KilnArch, AppIcon,
+  Brand, GithubMark, AppIcon,
 } from "./ui";
-import { KilnBuddy, Jump, useHover } from "./buddy";
+import { BlotBuddy, Jump, useHover } from "./buddy";
 import { play } from "@/lib/sound";
 
 const OUT_BACK = [0.175, 0.885, 0.32, 1.275];
 
-/* 1 — Manifesto: “Kiln” stays, the rest of the headline flips top → bottom every 5s */
+/* 1 — Manifesto: “Blot” stays, the rest of the headline flips top → bottom every 5s */
 const HEADLINES = [
   [" works while you ", "ship"],
   [" reads before it ", "writes"],
@@ -33,17 +34,18 @@ function RotatingHeadline() {
   const [i, setI] = useState(0);
   const reduce = useReducedMotion();
   useEffect(() => {
+    if (reduce) return;
     const id = setInterval(() => {
       if (!document.hidden) setI((v) => (v + 1) % HEADLINES.length);
     }, 5000);
     return () => clearInterval(id);
-  }, []);
+  }, [reduce]);
   const [mid, word] = HEADLINES[i];
   return (
     <h1 className="h-display headline">
-      Kiln
+      Blot
       <span className="flip">
-        <AnimatePresence initial={false}>
+        <AnimatePresence initial={false} mode="wait">
           <motion.span
             key={i}
             className="flip-item"
@@ -89,7 +91,7 @@ const TASKS = [
   [BookOpen, "Explain auth flow", "kodshag"],
 ];
 const DOCK = [
-  ["Kiln", null], ["GitHub", siGithub], ["Git", siGit], ["Terminal", "term"],
+  ["Blot", null], ["GitHub", siGithub], ["Git", siGit], ["Terminal", "term"],
   ["Linear", siLinear], ["Figma", siFigma], ["Notion", siNotion], ["Vercel", siVercel],
 ];
 
@@ -100,7 +102,7 @@ export function Tasks() {
   const [tip, setTip] = useState(null);
   return (
     <Card ref={ref} w={2} caption={{ title: "Tasks", text: "every job in its own tab" }} artClass="tasks-art">
-      <Label dot="var(--ember)">Kiln · Tasks</Label>
+      <Label dot="var(--ember)">Blot · Tasks</Label>
       <div className="task-tabs">
         {TASKS.map(([I, t, p], i) => (
           <button key={t} className="task-tab" onClick={() => { setSel(i); play("tick"); }}>
@@ -116,14 +118,14 @@ export function Tasks() {
         {DOCK.map(([name, icon], i) => (
           <motion.div
             key={name}
-            className={`dock-tile ${icon === null ? "kiln" : ""}`}
+            className={`dock-tile ${icon === null ? "blot" : ""}`}
             initial={{ y: 100, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: i * 0.06, ease: OUT_BACK }}
             onMouseEnter={() => setTip(i)}
             onMouseLeave={() => setTip(null)}
           >
-            {icon === null ? <KilnBuddy active={tip === i} size={24} weight={4} /> : icon === "term" ? <SquareTerminal size={26} /> : <Brand icon={icon} size={24} />}
+            {icon === null ? <BlotBuddy active={tip === i} size={24} weight={4} /> : icon === "term" ? <SquareTerminal size={26} /> : <Brand icon={icon} size={24} />}
             <AnimatePresence>
               {tip === i && (
                 <motion.span className="tooltip" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.1 }}>
@@ -151,14 +153,17 @@ export function AgentCrop() {
         </div>
         <p className="agent-msg">Комиссия округляется до умножения на лоты. Переношу округление в конец.</p>
         <Approval />
-        <Composer ctx={[]} placeholder="Reply to steer Kiln" />
+        <Composer ctx={[]} placeholder="Reply to steer Blot" />
       </div>
     </Card>
   );
 }
 
 /* 4 — Builder: a dark circle floods the card from the GitHub tile */
-export function Builder() {
+export function Builder({ progress }) {
+  const done = progress?.done ?? 0, total = progress?.total ?? 0;
+  const pct = total ? (done / total) * 100 : 0;
+  const shown = pct > 0 && pct < 1 ? "<1" : Math.round(pct);
   return (
     <Card arrow={false} className="builder" onMouseEnter={() => play("pop")}>
       <span className="flood" />
@@ -168,8 +173,16 @@ export function Builder() {
           <span className="names"><b>Yaroslav</b><span>@hqzdev</span></span>
           <span className="gh"><GithubMark size={24} color="#fff" /></span>
         </div>
-        <p className="bio">building kiln in public. one agent, one Mac, no cloud VMs.</p>
-        <a className="follow" href="https://github.com/Hqzdev" target="_blank" rel="noreferrer">
+        <p className="bio">building blot in public.</p>
+        <Link className="build-prog" href="/workspace" onClick={() => play("nav")} aria-label={`Project progress: ${shown}%`}>
+          <span className="bp-top">
+            <b>{shown}%</b>
+            <span className="mono">{done} / {total} tasks</span>
+          </span>
+          <span className="bp-bar"><motion.i initial={{ width: 0 }} whileInView={{ width: `${Math.max(pct, 1.5)}%` }} viewport={{ once: true }} transition={{ duration: 1.1, ease: [0.165, 0.84, 0.44, 1] }} /></span>
+          <span className="bp-cap mono">built · from the workspace plan</span>
+        </Link>
+        <a className="follow" href="https://github.com/Hqzdev/blot-agent" target="_blank" rel="noreferrer">
           <ArrowUpRight size={16} />Follow the build
         </a>
       </div>
@@ -248,7 +261,7 @@ export function BetaPass() {
 /* 7 — Agent loop: tabs swap content, the selection box springs between rows */
 const LOOP = {
   Plan: {
-    key: "P", hint: "Kiln is planning", sub: "tradr · 2 of 4 steps · 1m 12s", related: "Plan",
+    key: "P", hint: "Blot is planning", sub: "tradr · 2 of 4 steps · 1m 12s", related: "Plan",
     rows: [
       ["done", "Find where PnL and fees are computed"],
       ["done", "Reproduce the drift with a failing test"],
@@ -258,7 +271,7 @@ const LOOP = {
     extra: <Changes />,
   },
   Run: {
-    key: "R", hint: "Kiln is running", sub: "tradr · step 3 of 4 · 2m 05s", related: "Steps",
+    key: "R", hint: "Blot is running", sub: "tradr · step 3 of 4 · 2m 05s", related: "Steps",
     rows: [
       [FileText, "Read src/lib/pnl.ts", "212 lines"],
       [Search, "Searched roundFee", "4 matches"],
@@ -286,12 +299,12 @@ const LOOP = {
   Ship: {
     key: "S", hint: "Shipped", sub: "tradr · merged · 3m 40s", related: "Checks",
     rows: [
-      [CircleCheck, "CI passed on kiln/fix-pnl-rounding", "20/20"],
+      [CircleCheck, "CI passed on blot/fix-pnl-rounding", "20/20"],
       [GitPullRequest, "PR #43 opened and approved", "you"],
       [GitMerge, "Merged into main", "now"],
       [Trash2, "Worktree cleaned up", "auto"],
     ],
-    extra: <TerminalBlock cmd="gh pr merge 43 --squash" lines={["✓ Squashed and merged pull request #43", "✓ Deleted branch kiln/fix-pnl-rounding"]} />,
+    extra: <TerminalBlock cmd="gh pr merge 43 --squash" lines={["✓ Squashed and merged pull request #43", "✓ Deleted branch blot/fix-pnl-rounding"]} />,
   },
 };
 
@@ -306,6 +319,7 @@ export function AgentLoop() {
         {Object.keys(LOOP).map((t) => (
           <button
             key={t}
+            aria-pressed={tab === t}
             className={`loop-tab ${tab === t ? "on" : ""}`}
             onMouseEnter={() => setHover(t)}
             onMouseLeave={() => setHover(null)}
@@ -329,7 +343,7 @@ export function AgentLoop() {
             transition={{ duration: 0.2 }}
             className="loop-content"
           >
-            <div className="hints"><span>{d.hint}</span><Badge>kiln/fix-pnl-rounding</Badge></div>
+            <div className="hints"><span>{d.hint}</span><Badge>blot/fix-pnl-rounding</Badge></div>
             <div className="task-box">
               <span className="tile"><Wrench size={20} color="#EDEDED" /></span>
               <span className="txt"><b>Fix PnL rounding</b><span className="mono">{d.sub}</span></span>
@@ -553,10 +567,10 @@ export function LocalType() {
   );
 }
 
-/* 12 — Kiln mark: the kiln heats up on hover */
-export function KilnMark() {
+/* 12 — Blot mark: the blot heats up on hover */
+export function BlotMark() {
   return (
-    <Card caption={{ title: "Kiln", text: "task in, code out" }} className="mark-card" onMouseEnter={() => play("open")}>
+    <Card caption={{ title: "Blot", text: "task in, code out" }} className="mark-card" onMouseEnter={() => play("open")}>
       <span className="arch" />
       <span className="ember" />
     </Card>
@@ -622,19 +636,19 @@ export function Sandbox() {
   );
 }
 
-/* 15 — Download: the icon flips, a tooltip pops above the button */
+/* 15 — Development progress: a direct link to the project plan. */
 export function DownloadCard() {
   const [hover, bind] = useHover();
   return (
     <Card arrow={false} className="dl-card dark" onMouseEnter={() => { bind.onMouseEnter(); play("nock"); }} onMouseLeave={bind.onMouseLeave}>
       <div className="dl-in">
         <Jump active={hover} height={88} className="dl-icon"><AppIcon size={88} happy={hover} /></Jump>
-        <b>Kiln for macOS</b>
+        <b>Blot for macOS</b>
         <span className="dl-btn-wrap">
-          <span className="dl-tip mono">Kiln-1.4.dmg · 48 MB</span>
-          <a className="dl-btn" href="/beta"><Download size={16} />Download beta</a>
+          <span className="dl-tip mono">Implementation plan and progress</span>
+          <Link className="dl-btn" href="/workspace" onClick={() => play("nav")}><ArrowUpRight size={16} />Follow development</Link>
         </span>
-        <span className="mono dl-meta">v1.4 · Apple silicon · macOS 14+</span>
+        <span className="mono dl-meta">In development · macOS 26+</span>
       </div>
     </Card>
   );

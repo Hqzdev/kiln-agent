@@ -115,9 +115,9 @@ export default function Workspace() {
   };
 
   return (
-    <main className="ws-page" lang="ru">
+    <main className="ws-page" lang="ru" id="main-content" tabIndex={-1}>
       <div className="ws-topline">
-        <div className="ws-breadcrumb"><Link href="/">Kiln</Link><span>/</span><span>Рабочая среда проекта</span></div>
+        <div className="ws-breadcrumb"><Link href="/">Blot</Link><span>/</span><span>Рабочая среда проекта</span></div>
         <span className="ws-version">План v1.2 · 11.10.2026</span>
       </div>
       <header className="ws-header">
@@ -125,7 +125,7 @@ export default function Workspace() {
           <div className="ws-eyebrow"><span /> ОТ КОНЦЕПЦИИ ДО РЕЛИЗА</div>
           <h1>Рабочая среда.</h1>
           <p>Все шаги к виртуальной инженерной команде.<br className="ws-desktop-break" /> SwiftUI на Mac и iPhone. Java и GigaChat — на компьютере.</p>
-          <a className="ws-download" href="/KILN_TECHNICAL_SPECIFICATION.md" download><ArrowDownToLine size={16} /> Скачать полное ТЗ <span>MD</span></a>
+          <a className="ws-download" href="/BLOT_TECHNICAL_SPECIFICATION.md" download><ArrowDownToLine size={16} /> Скачать полное ТЗ <span>MD</span></a>
         </div>
         <div className="ws-dates" aria-label="Контрольные даты">
           <div><span className="ws-date-number">01<span> / 12</span></span><div><strong>Функции готовы</strong><span>Сквозная beta · {schedule.featureReady.slice(0, 4)}</span></div></div>

@@ -1,0 +1,69 @@
+openapi: 3.1.0
+info:
+  title: Blot local API
+  version: 1.0.0
+  description: Contract draft only. All routes require user implementation.
+servers:
+  - url: http://127.0.0.1:8080
+paths:
+  /v1/status:
+    get:
+      operationId: backendStatus
+      responses:
+        '200':
+          description: Backend is running
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [schemaVersion, status]
+                properties:
+                  schemaVersion: {const: 1}
+                  status: {const: ready}
+  /v1/commands:
+    post:
+      operationId: submitCommand
+      security: [{deviceSession: []}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: './command.schema.json'}
+      responses:
+        '202':
+          description: Command accepted; work may still be running
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Receipt'}
+        '409':
+          description: Version conflict or command ID reused with different content
+  /v1/events:
+    get:
+      operationId: subscribeEvents
+      security: [{deviceSession: []}]
+      parameters:
+        - in: header
+          name: Last-Event-ID
+          schema: {type: string, pattern: '^[0-9]+$'}
+      responses:
+        '200':
+          description: SSE data contains project-event.schema.json envelopes
+          content:
+            text/event-stream:
+              schema: {type: string}
+        '409':
+          description: Replay unavailable; fetch a fresh snapshot
+components:
+  securitySchemes:
+    deviceSession:
+      type: http
+      scheme: bearer
+  schemas:
+    Receipt:
+      type: object
+      required: [commandId, decision]
+      properties:
+        commandId: {type: string, format: uuid}
+        decision: {enum: [accepted, rejected]}
+        operationId: {type: string, format: uuid}
+        error: {type: string}

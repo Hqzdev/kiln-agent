@@ -1,58 +1,43 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://kiln.local/contracts/project-event",
+  "title": "Blot persisted event v2",
   "type": "object",
   "required": [
-    "eventId",
-    "projectId",
-    "runId",
-    "entityId",
     "schemaVersion",
     "seq",
-    "entityVersion",
-    "occurredAt",
+    "eventId",
+    "projectId",
     "type",
+    "occurredAt",
     "payload"
   ],
   "properties": {
+    "schemaVersion": {
+      "const": 2
+    },
+    "seq": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]*$"
+    },
     "eventId": {
       "type": "string",
       "format": "uuid"
     },
     "projectId": {
-      "type": "string",
+      "type": [
+        "string",
+        "null"
+      ],
       "format": "uuid"
     },
-    "runId": {
-      "type": "string",
-      "format": "uuid"
-    },
-    "entityId": {
-      "type": "string",
-      "format": "uuid"
-    },
-    "schemaVersion": {
-      "const": 1
-    },
-    "seq": {
-      "type": "string",
-      "pattern": "^[0-9]+$"
-    },
-    "entityVersion": {
-      "type": "integer",
-      "minimum": 0
+    "type": {
+      "type": "string"
     },
     "occurredAt": {
       "type": "string",
       "format": "date-time"
     },
-    "type": {
-      "type": "string",
-      "minLength": 1
-    },
-    "payload": {
-      "type": "object"
-    }
+    "payload": {}
   },
   "additionalProperties": false
 }

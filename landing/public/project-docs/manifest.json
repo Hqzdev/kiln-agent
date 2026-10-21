@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
   "architectureDocuments": 22,
-  "completedTasks": 10,
+  "completedTasks": 12,
   "documents": [
     {
       "id": "P0.1",
       "taskId": "P0.1",
       "source": "docs/product-scope.md",
       "downloadUrl": "/project-docs/product-scope.md",
-      "sha256": "e8975d1b85ac92df14ea16e5e9cd019fab1e7b4db827c9265b282f3587976934",
-      "bytes": 8441,
+      "sha256": "080dd1f0a600747f5b8413002204b7c50d06ed52f2146c691608e84fd7fc0893",
+      "bytes": 10077,
       "taskCompleted": true
     },
     {
@@ -17,7 +17,7 @@
       "taskId": "P0.2",
       "source": "docs/domain-glossary.md",
       "downloadUrl": "/project-docs/domain-glossary.md",
-      "sha256": "13f7741b733b655b8a6e3cc1bcd7e2d9d8fd966817d250574ae1d38b9d320fb0",
+      "sha256": "c1e1b401d2e4ab5ff30519ad164a33f0c9fa64d4d9068058c2aaeca9c4588ac5",
       "bytes": 9195,
       "taskCompleted": true
     },
@@ -26,8 +26,8 @@
       "taskId": "P0.3",
       "source": "docs/chat-to-run.md",
       "downloadUrl": "/project-docs/chat-to-run.md",
-      "sha256": "3e40fb40f0d090e8e6a8278f2424fcb0244a04b0d6f41d856f1ab4ec8fb3bbe6",
-      "bytes": 5484,
+      "sha256": "8b850152c58f50b1ace6f92ce69871e3eac4d01c8c5d5bd297db0481ebe772cd",
+      "bytes": 6019,
       "taskCompleted": true
     },
     {
@@ -35,7 +35,7 @@
       "taskId": "P0.4",
       "source": "docs/roles-and-gates.md",
       "downloadUrl": "/project-docs/roles-and-gates.md",
-      "sha256": "5eaef9af9e3268b5f04e4e7f52abd373f91ff1476318c9fcec4ef02269d902e1",
+      "sha256": "f2fae43e138596411a5fc3c44be32d7f27f6e90efecdb4b52962aff837d8a130",
       "bytes": 7028,
       "taskCompleted": true
     },
@@ -44,7 +44,7 @@
       "taskId": "P0.5",
       "source": "docs/permission-policy.md",
       "downloadUrl": "/project-docs/permission-policy.md",
-      "sha256": "b0cd3b72aa2ac390c8a2bc543e447b27a88952c133ed421e272b0e46fe77c2ff",
+      "sha256": "63f039b53f02d255af87b1bd06fa9100d23b3d77f25717bfc5c710ab25879fd2",
       "bytes": 6943,
       "taskCompleted": true
     },
@@ -53,7 +53,7 @@
       "taskId": "P0.6",
       "source": "docs/supported-projects.md",
       "downloadUrl": "/project-docs/supported-projects.md",
-      "sha256": "f676ea366f2e53fbf1f80a08315ce5d89120b858346b98d8815094ceb2745b80",
+      "sha256": "e96316cf85521b0076ecf0e579a7427e5f9bf07c6cb3bf0abdfec12ba828f751",
       "bytes": 6435,
       "taskCompleted": true
     },
@@ -62,7 +62,7 @@
       "taskId": "P0.7",
       "source": "docs/platform-matrix.md",
       "downloadUrl": "/project-docs/platform-matrix.md",
-      "sha256": "3d8633be8dc486e8bb3fbfbd4c15e20dffffacf5901c63bfa5bd834a919ad0f5",
+      "sha256": "17b069060308b6fab1fb005f64a39b7d52747afc940c1667463f64f3579a77f0",
       "bytes": 5466,
       "taskCompleted": true
     },
@@ -71,8 +71,8 @@
       "taskId": "P0.8",
       "source": "docs/tool-boundaries.md",
       "downloadUrl": "/project-docs/tool-boundaries.md",
-      "sha256": "7724489b7cc67ee7d12d604a16cf37af4b1fe41a98ff4f54edd1abdf3fd4a2fe",
-      "bytes": 6635,
+      "sha256": "79395af2978a0fc64727805d8c245e81ddb1c3fa5e3a5d15a88766ba39d2b786",
+      "bytes": 9583,
       "taskCompleted": true
     },
     {
@@ -80,8 +80,8 @@
       "taskId": "P0.9",
       "source": "docs/data-lifecycle.md",
       "downloadUrl": "/project-docs/data-lifecycle.md",
-      "sha256": "a1259f3880f62fa44d39a93a6b90b256e4517ec75775b6b4819380a3da726e7f",
-      "bytes": 7706,
+      "sha256": "bae053fbc8ae5310e3af8424748ea55b897227777d68e12d5205246fc947a029",
+      "bytes": 8575,
       "taskCompleted": true
     },
     {
@@ -89,8 +89,8 @@
       "taskId": "P0.10",
       "source": "docs/acceptance-matrix.md",
       "downloadUrl": "/project-docs/acceptance-matrix.md",
-      "sha256": "07f8558fb4b3396cbafd4467695c46c958f1c3e777f0190ffb7c529b2c3e3c2c",
-      "bytes": 7671,
+      "sha256": "90c90cee279ba5221ad0a909ede25421f5e8c2f5267a176e5b08fe7e268423a3",
+      "bytes": 8161,
       "taskCompleted": true
     },
     {
@@ -98,25 +98,25 @@
       "taskId": "A2.1",
       "source": "docs/architecture/repo-policy.md",
       "downloadUrl": "/project-docs/architecture/repo-policy.md",
-      "sha256": "a52d2213a9c7c399a1c28a67fc21024ddb2b1237b7be53132221b5b647a7641d",
-      "bytes": 5285,
-      "taskCompleted": false
+      "sha256": "6239ef384d078ccaaf426f18c67285b488436fbce2f20ab2b5fe87c3592467ad",
+      "bytes": 6600,
+      "taskCompleted": true
     },
     {
       "id": "A2.2",
       "taskId": "A2.2",
       "source": "docs/architecture/apple-targets.md",
       "downloadUrl": "/project-docs/architecture/apple-targets.md",
-      "sha256": "3dcd525aa79e47ea371e799261c9efdb9fcd94aaf0051f9dc6b081bbb5eabbec",
-      "bytes": 5562,
-      "taskCompleted": false
+      "sha256": "e5deb544783c16383d41fffc853937b860d11d08aa1afdf5f97d8ef48e2cb855",
+      "bytes": 7084,
+      "taskCompleted": true
     },
     {
       "id": "A2.3",
       "taskId": "A2.3",
       "source": "docs/architecture/swift-packages.md",
       "downloadUrl": "/project-docs/architecture/swift-packages.md",
-      "sha256": "6c56e4a96e0e33ab1573b9b7dbd7dfffbc3fd600b2e67da484a53e4ce5a1c9a1",
+      "sha256": "1c31d1cac8f445dcada563700b0768e2e7dce05e166e477e42e6ab176ebe1225",
       "bytes": 5090,
       "taskCompleted": false
     },
@@ -125,8 +125,8 @@
       "taskId": "A2.4",
       "source": "docs/architecture/java-modules.md",
       "downloadUrl": "/project-docs/architecture/java-modules.md",
-      "sha256": "069824fda1bfc3d644c422677bf627dd0128eada07899b8ce91c82f38b6d0c5a",
-      "bytes": 5112,
+      "sha256": "ecd4b903dc63c6cc0bb775da1c01cc50c0f1412f65e9c2d64e2d34932d0e9d81",
+      "bytes": 5382,
       "taskCompleted": false
     },
     {
@@ -134,7 +134,7 @@
       "taskId": "A2.5",
       "source": "docs/architecture/composition-root.md",
       "downloadUrl": "/project-docs/architecture/composition-root.md",
-      "sha256": "c446a71f28e966433a5c1b1d08c096af399a62ecea4f769b10301c90d5e304a3",
+      "sha256": "0d2acd121cada9d834118f5acca66a049931eea8ae1248e17189e406b2f818ee",
       "bytes": 6258,
       "taskCompleted": false
     },
@@ -152,7 +152,7 @@
       "taskId": "A2.7",
       "source": "docs/architecture/formatting.md",
       "downloadUrl": "/project-docs/architecture/formatting.md",
-      "sha256": "edd535c1b1b1988d77c33610e894429891f33441fe73c5a3fe201d78c93706ea",
+      "sha256": "f0e2d59553e7420b96598c93b61f848b1a5c7ce58b529c24565ae744c5b23556",
       "bytes": 4910,
       "taskCompleted": false
     },
@@ -161,7 +161,7 @@
       "taskId": "A2.8",
       "source": "docs/architecture/build-commands.md",
       "downloadUrl": "/project-docs/architecture/build-commands.md",
-      "sha256": "5e5a1c9c9b72c6c6e1b0c4895e378f86366507e367644d90f8f3c6cbfd2f1268",
+      "sha256": "36f77c715de143f136c55cc8d0302baa21b5172cd0ab3c2a3c3d24123896bc49",
       "bytes": 4034,
       "taskCompleted": false
     },
@@ -197,7 +197,7 @@
       "taskId": "A2.12",
       "source": "docs/architecture/logging.md",
       "downloadUrl": "/project-docs/architecture/logging.md",
-      "sha256": "ef9911bb5b1ea1a9c074868e2a80ac745b1e54453e9dec4a8e9d87d8348df373",
+      "sha256": "fad447c25683446204956830b3794c68cf2024ea6b94e99e07d03ce841ead46b",
       "bytes": 5774,
       "taskCompleted": false
     },
@@ -206,8 +206,8 @@
       "taskId": null,
       "source": "docs/README.md",
       "downloadUrl": "/project-docs/README.md",
-      "sha256": "07911cc17477f0ef73a179810f4a024f169b7ae48ad2f4937234f2f05bc8b92a",
-      "bytes": 6347,
+      "sha256": "86ab4c48426c8f6df9a7c9bc60c36441231b4cf3b2e90c784d6353d7d7523e24",
+      "bytes": 8663,
       "taskCompleted": false
     },
     {
@@ -215,8 +215,89 @@
       "taskId": null,
       "source": "docs/documentation-review.md",
       "downloadUrl": "/project-docs/documentation-review.md",
-      "sha256": "dee6d5ee5ba4a058e0e93fed421c50c1b829f006a21e3e4172138a93b2f20521",
-      "bytes": 3941,
+      "sha256": "fd9b762045014286252e727c16c8ac0b42a14f0f69c27784d88e7bdc42276165",
+      "bytes": 4988,
+      "taskCompleted": false
+    },
+    {
+      "id": "implementation-plan",
+      "taskId": null,
+      "source": "docs/implementation-plan.md",
+      "downloadUrl": "/project-docs/implementation-plan.md",
+      "sha256": "2b684ac6537a7b7cde33a401d22a4fd8ef8e1a2cc9dd76847a637bedc80ad38a",
+      "bytes": 270730,
+      "taskCompleted": false
+    },
+    {
+      "id": "orchestrator",
+      "taskId": null,
+      "source": "docs/agents/orchestrator.md",
+      "downloadUrl": "/project-docs/agents/orchestrator.md",
+      "sha256": "99b10abf5a3a326cc3b3719af34fb874e3d394cdecf492f5995ae11a1caaf4cb",
+      "bytes": 13159,
+      "taskCompleted": false
+    },
+    {
+      "id": "orchestrator-commands",
+      "taskId": null,
+      "source": "docs/agents/orchestrator-commands.md",
+      "downloadUrl": "/project-docs/agents/orchestrator-commands.md",
+      "sha256": "9b06b60a7905d95223afe24e29564f9c22f155330d398ef157a6ab9716aed7e2",
+      "bytes": 31297,
+      "taskCompleted": false
+    },
+    {
+      "id": "agent-types",
+      "taskId": null,
+      "source": "docs/agents/agent-types.md",
+      "downloadUrl": "/project-docs/agents/agent-types.md",
+      "sha256": "eca85473c957ba5a6520cc80276297f9db2e3e2b6e6aecb2d520c1bc7513d63d",
+      "bytes": 12149,
+      "taskCompleted": false
+    },
+    {
+      "id": "agent-system-prompts",
+      "taskId": null,
+      "source": "docs/agents/agent-system-prompts.md",
+      "downloadUrl": "/project-docs/agents/agent-system-prompts.md",
+      "sha256": "14fa3c545c9a2faaf3d2d71d4f093ba1a7ae8a41b75bed01d741bfed2c89daba",
+      "bytes": 34179,
+      "taskCompleted": false
+    },
+    {
+      "id": "agent-capabilities",
+      "taskId": null,
+      "source": "docs/agents/agent-capabilities.md",
+      "downloadUrl": "/project-docs/agents/agent-capabilities.md",
+      "sha256": "10fb58bf3b6a78c1bee3adf3d72f39c9ae7c4c44ea9b62c5a03b680ab5ff5712",
+      "bytes": 17862,
+      "taskCompleted": false
+    },
+    {
+      "id": "motes",
+      "taskId": null,
+      "source": "docs/agents/motes.md",
+      "downloadUrl": "/project-docs/agents/motes.md",
+      "sha256": "864a3e30520f6eb3fbc40713a73945c6588542ed3c182504f81e419b73a1dea2",
+      "bytes": 9841,
+      "taskCompleted": false
+    },
+    {
+      "id": "optimization",
+      "taskId": null,
+      "source": "docs/optimization.md",
+      "downloadUrl": "/project-docs/optimization.md",
+      "sha256": "ed55c6e6605a8bc0c8e8cd2e11e545f5cc08b69ab33c15749b6ac03f17346b70",
+      "bytes": 7879,
+      "taskCompleted": false
+    },
+    {
+      "id": "google-workspace",
+      "taskId": null,
+      "source": "docs/integrations/google-workspace.md",
+      "downloadUrl": "/project-docs/integrations/google-workspace.md",
+      "sha256": "40921e84c587ee4ad9d44b5f3d384310a9f0a6befebb908d4fb820cd4afb2c00",
+      "bytes": 8472,
       "taskCompleted": false
     }
   ]

@@ -7,6 +7,10 @@ import { siX } from "simple-icons";
 import Card from "./Card";
 import { Label, Brand, GithubMark } from "./ui";
 import { play } from "@/lib/sound";
+import { useClipboard } from "@/lib/useClipboard";
+import { emailDraft } from "@/lib/emailDraft.mjs";
+import FormFeedback from "./FormFeedback";
+import FormInput from "./FormInput";
 
 const OUT_BACK = [0.175, 0.885, 0.32, 1.275];
 const TOPICS = ["Beta access", "Bug", "Feature idea", "Partnership", "Press"];
@@ -16,57 +20,59 @@ function ContactForm() {
   const [done, setDone] = useState(false);
   return (
     <Card w={2} h={2} arrow={false} noSpot>
-      <form className="manifesto signup" style={{ gap: 16, padding: 48 }} onSubmit={(e) => { e.preventDefault(); setDone(true); play("success"); }}>
+      <form className="manifesto signup" style={{ gap: 16, padding: 48 }} onChange={() => setDone(false)} onSubmit={(e) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget);
+        window.location.href = emailDraft(`Blot: ${topic}`, Object.fromEntries(data));
+        setDone(true);
+      }}>
         <h1 className="h-display">Talk to a <span className="u">human</span><span className="muted">.</span></h1>
         <p style={{ fontSize: 18, color: "var(--text-2)" }}>no bots, no ticket queue. one person reads everything.</p>
         <div className="rule" />
         <div style={{ display: "flex", gap: 10 }}>
-          <label className="field" style={{ flex: 1 }}><span>Name</span><span className="input-wrap"><input required placeholder="Your name" /></span></label>
-          <label className="field" style={{ flex: 1 }}><span>Email</span><span className="input-wrap"><Mail size={16} color="var(--text-3)" /><input type="email" required placeholder="you@company.com" /></span></label>
+          <label className="field" style={{ flex: 1 }}><span>Name</span><FormInput name="Name" autoComplete="name" placeholder="Your name" /></label>
+          <label className="field" style={{ flex: 1 }}><span>Email</span><FormInput type="email" name="Email" autoComplete="email" icon={Mail} placeholder="you@company.com" /></label>
         </div>
         <div className="field">
           <span>About</span>
           <div className="chips">
             {TOPICS.map((t) => (
-              <motion.button type="button" key={t} whileTap={{ scale: 0.94 }} className={`pick ${topic === t ? "on" : ""}`} onClick={() => { setTopic(t); play("swatch"); }}>{t}</motion.button>
+              <motion.button type="button" key={t} aria-pressed={topic === t} whileTap={{ scale: 0.94 }} className={`pick ${topic === t ? "on" : ""}`} onClick={() => { setTopic(t); setDone(false); play("swatch"); }}>{t}</motion.button>
             ))}
           </div>
         </div>
         <label className="field">
           <span>Message</span>
-          <textarea className="textarea" required rows={4} placeholder={topic === "Bug" ? "What happened, what you expected, Kiln version…" : "A few lines is plenty."} />
+          <FormInput multiline name="Message" rows={4} placeholder={topic === "Bug" ? "What happened, what you expected, Blot version…" : "A few lines is plenty."} />
         </label>
-        <motion.button type="submit" className={`submit ${done ? "done" : ""}`} whileTap={{ scale: 0.97 }}>
+        <motion.button type="submit" className="submit" whileTap={{ scale: 0.97 }}>
           <AnimatePresence mode="wait">
             <motion.span key={String(done)} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.18 }}>
-              {done ? <><Check size={18} />Sent — reply within a day</> : <><ArrowRight size={18} />Send message</>}
+              <><Mail size={18} />Open email draft</>
             </motion.span>
           </AnimatePresence>
         </motion.button>
+        <FormFeedback>{done ? "Continue in your email app and send the draft. If it did not open, email hello@blot.dev." : "Your email app opens with this message. You send it from there."}</FormFeedback>
       </form>
     </Card>
   );
 }
 
 function CopyEmail() {
-  const [ok, setOk] = useState(false);
-  const copy = async () => {
-    try { await navigator.clipboard.writeText("hello@kiln.dev"); } catch {}
-    setOk(true); play("tick");
-    setTimeout(() => setOk(false), 1600);
-  };
+  const { state, copy } = useClipboard("hello@blot.dev");
+  const ok = state === "copied";
   return (
     <Card w={2} arrow={false} artClass="pad28 gap12">
       <Label dot="var(--ember)">Email</Label>
-      <button className="email-big" onClick={copy}>
-        <span>hello@kiln.dev</span>
+      <button type="button" className="email-big" onClick={copy} disabled={state === "copying"} aria-label={ok ? "Email copied" : "Copy hello@blot.dev"}>
+        <span>hello@blot.dev</span>
         <AnimatePresence mode="wait" initial={false}>
           <motion.span key={String(ok)} className="email-copy" initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.6 }} transition={{ duration: 0.2, ease: OUT_BACK }}>
             {ok ? <Check size={18} /> : <Copy size={18} />}
           </motion.span>
         </AnimatePresence>
       </button>
-      <p className="feat-desc" style={{ fontSize: 15 }}>{ok ? "Copied to clipboard." : "Click to copy. Privacy questions: privacy@kiln.dev"}</p>
+      <FormFeedback error={state === "error"}>{state === "error" ? "Could not copy. Select hello@blot.dev and copy it manually." : ok ? "Copied to clipboard." : "Click to copy. Privacy questions: privacy@blot.dev"}</FormFeedback>
     </Card>
   );
 }
@@ -113,9 +119,9 @@ function Response() {
 }
 
 const CHANNELS = [
-  ["Telegram", "@kiln_beta", "Beta chat, fastest replies", <Send key="t" size={20} />, "https://t.me/"],
+  ["Telegram", "@blot_beta", "Beta chat, fastest replies", <Send key="t" size={20} />, "https://t.me/"],
   ["GitHub", "Hqzdev", "Bugs and feature requests", <GithubMark key="g" size={20} />, "https://github.com/Hqzdev"],
-  ["X", "@kilndev", "Updates and build log", <Brand key="x" icon={siX} size={18} />, "https://x.com/"],
+  ["X", "@blotdev", "Updates and build log", <Brand key="x" icon={siX} size={18} />, "https://x.com/"],
   ["Issues", "Good first issues", "Want to contribute?", <CircleDot key="i" size={20} />, "/github"],
 ];
 function Channel({ name, handle, desc, icon, href }) {

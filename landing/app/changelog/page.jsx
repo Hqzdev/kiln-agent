@@ -3,14 +3,14 @@ import {
   Hero, Subscribe, ThisWeek, NextUp, WeekCounter, LatestRelease, Release, FirstCommit, Follow,
 } from "@/components/pages";
 
-export const metadata = { title: "Changelog — Kiln" };
+export const metadata = { title: "Changelog — Blot" };
 
 export default function Changelog() {
   return (
     <Stage hint={false}>
       <div className="grid">
         <Hero
-          title={<>Kiln<span className="muted"> build log</span>.</>}
+          title={<>Blot<span className="muted"> build log</span>.</>}
           lines={[
             "one release every monday.",
             "what shipped. what broke. what's next.",

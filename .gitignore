@@ -22,3 +22,11 @@ logs/
 *.db-shm
 *.db-wal
 __pycache__/
+*.xcarchive/
+*.ipa
+*.dSYM/
+*.dmg
+*.jks
+*.keystore
+*.key
+*.pem

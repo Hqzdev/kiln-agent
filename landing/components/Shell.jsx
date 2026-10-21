@@ -3,30 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
+import { motion, MotionConfig } from "motion/react";
 import { MousePointer2, Volume2, VolumeX } from "lucide-react";
 import { play, setMuted, useMuted } from "@/lib/sound";
-import { BuddyFace } from "./buddy";
+import ThemeControl from "./ThemeControl";
 
-// G1 — white overlay until assets are ready, fades 500ms, then leaves layout.
-export function Loader() {
-  const [state, setState] = useState("on");
-  useEffect(() => {
-    const done = () => {
-      setState("fading");
-      setTimeout(() => setState("off"), 520);
-    };
-    if (document.readyState === "complete") requestAnimationFrame(done);
-    else window.addEventListener("load", done, { once: true });
-    const t = setTimeout(done, 1500);
-    return () => clearTimeout(t);
-  }, []);
-  if (state === "off") return null;
-  return (
-    <div className={`loader ${state === "fading" ? "done" : ""}`}>
-      <BuddyFace size={36} stroke="#0D0D0D" ember="#E5484D" />
-    </div>
-  );
+export function MotionPreferences({ children }) {
+  return <MotionConfig reducedMotion="user">{children}</MotionConfig>;
 }
 
 const LINKS = [
@@ -56,11 +39,11 @@ export function Nav() {
 
   return (
     <div className={`nav-wrap ${hidden ? "hidden" : ""} ${path.startsWith("/workspace") ? "workspace-nav" : ""}`}>
-      <nav className="nav">
+      <nav className="nav" aria-label="Main navigation">
         {LINKS.map((l) => {
           const active = l.href === "/" ? path === "/" : path.startsWith(l.href);
           return (
-            <Link key={l.href} href={l.href} className={`nav-item ${active ? "active" : ""}`} onClick={() => play("nav")}>
+            <Link key={l.href} href={l.href} aria-current={active ? "page" : undefined} className={`nav-item ${active ? "active" : ""}`} onClick={() => play("nav")}>
               {active && (
                 <motion.span layoutId="nav-pill" className="pill" transition={{ duration: 0.2, ease: "easeOut" }} />
               )}
@@ -72,10 +55,12 @@ export function Nav() {
         <button
           className="nav-sound"
           aria-label={muted ? "Turn sound on" : "Turn sound off"}
+          aria-pressed={!muted}
           onClick={() => { setMuted(!muted); if (muted) setTimeout(() => play("tick"), 0); }}
         >
           {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
         </button>
+        <ThemeControl />
       </nav>
     </div>
   );
@@ -84,10 +69,10 @@ export function Nav() {
 export function Footer({ className = "" }) {
   return (
     <footer className={`footer ${className}`}>
-      <span className="label"><i style={{ background: "var(--ember)" }} />Kiln · 2026</span>
+      <span className="label"><i style={{ background: "var(--ember)" }} />Blot · 2026</span>
       <nav aria-label="Ссылки в футере">
         <Link href="/workspace" onClick={() => play("nav")}>Задачи</Link>
-        <a href="/KILN_TECHNICAL_SPECIFICATION.md" download>Скачать техническое задание ↓</a>
+        <a href="/BLOT_TECHNICAL_SPECIFICATION.md" download>Скачать техническое задание ↓</a>
         {[["/changelog", "Changelog"], ["/docs", "Docs"], ["/privacy", "Privacy"], ["/github", "GitHub"], ["/contact", "Contact"]].map(([href, label]) => (
           <Link key={href} href={href} onClick={() => play("nav")}>{label}</Link>
         ))}
@@ -96,23 +81,16 @@ export function Footer({ className = "" }) {
   );
 }
 
-// Scales the fixed 1180px bento layout to fit narrower windows without reflowing it.
+// Cards reflow in CSS so text and controls retain their readable sizes.
 export function Stage({ children, hint = true }) {
   const [gone, setGone] = useState(false);
   useEffect(() => {
-    const fit = () => {
-      const base = innerWidth <= 760 ? 580 : 1180;
-      const s = Math.min(1, (innerWidth - 32) / base);
-      document.documentElement.style.setProperty("--scale", String(s));
-    };
-    fit();
-    addEventListener("resize", fit);
     const onScroll = () => { if (scrollY > 40) setGone(true); };
     addEventListener("scroll", onScroll, { passive: true });
-    return () => { removeEventListener("resize", fit); removeEventListener("scroll", onScroll); };
+    return () => removeEventListener("scroll", onScroll);
   }, []);
   return (
-    <main className="page">
+    <main className="page" id="main-content" tabIndex={-1}>
       <div className="stage">
         {hint ? (
           <div className={`look-around ${gone ? "gone" : ""}`}>

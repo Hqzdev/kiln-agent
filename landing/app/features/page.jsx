@@ -3,18 +3,18 @@ import {
   Hero, AnyModel, Cost, Parallel, ReviewFirst, Approvals, BigType, LocalHistory, Stack, Benchmark, CTA,
 } from "@/components/pages";
 
-export const metadata = { title: "Features — Kiln" };
+export const metadata = { title: "Features — Blot" };
 
 export default function Features() {
   return (
     <Stage hint={false}>
       <div className="grid">
         <Hero
-          title={<><span className="muted">Why </span>Kiln<span className="muted">,<br />not just another agent.</span></>}
+          title={<><span className="muted">Why </span>Blot<span className="muted">,<br />not just another agent.</span></>}
           lines={[
             "codex is great if you're all-in on one model vendor.",
             "claude code is great if you live in a terminal.",
-            { b: "kiln is for everyone else*." },
+            { b: "blot is for everyone else*." },
             "any model, switched per task.",
             "a native mac app, not a tab in your terminal.",
             "every task ends as a diff you can read.",

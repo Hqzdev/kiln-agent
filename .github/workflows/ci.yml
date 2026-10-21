@@ -20,8 +20,9 @@ jobs:
         working-directory: landing
       - run: npm run build
         working-directory: landing
-  java-configuration:
-    name: Gradle configuration (server code not implemented)
+  java-backend:
+    name: Java backend checks
+    timeout-minutes: 20
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -29,11 +30,54 @@ jobs:
         with:
           distribution: temurin
           java-version: '25'
-      - run: backend/gradlew -p backend projects
-      - run: backend/gradlew -p backend spotlessCheck
+      - name: Show pinned tool versions
+        run: |
+          java -version
+          backend/gradlew --version
+      - name: Verify Gradle project configuration
+        run: backend/gradlew --no-daemon -p backend projects
+      - name: Run formatting, dependency verification, and Java checks
+        run: backend/gradlew --no-daemon -p backend --dependency-verification=strict spotlessCheck check
+      - name: Export real HTTP contract fixtures
+        uses: actions/upload-artifact@v4
+        with:
+          name: http-contract-fixtures
+          path: .build/http-fixtures
+          if-no-files-found: error
+  swift-packages:
+    needs: java-backend
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.0.1.app/Contents/Developer
+    name: Swift package checks
+    timeout-minutes: 20
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify Swift and Apple SDK versions
+        run: |
+          swift --version
+          python3 -c "import re, subprocess, sys; text = subprocess.check_output(['swift', '--version'], text=True); match = re.search(r'Swift version (\\d+)\\.(\\d+)', text); sys.exit(0 if match and tuple(map(int, match.groups())) >= (6, 2) else 1)" || { echo '::error::Swift 6.2 or newer is required by Package.swift'; exit 1; }
+          xcodebuild -version
+          xcrun --sdk macosx --show-sdk-version
+      - uses: actions/download-artifact@v4
+        with:
+          name: http-contract-fixtures
+          path: .build/http-fixtures
+      - name: Resolve, build, and test BlotDomain
+        run: |
+          swift package resolve --package-path packages/BlotDomain
+          swift build --package-path packages/BlotDomain
+          swift test --package-path packages/BlotDomain
+      - name: Resolve, build, and test BlotAPI
+        env:
+          BLOT_HTTP_FIXTURES: ${{ github.workspace }}/.build/http-fixtures
+        run: |
+          swift package resolve --package-path packages/BlotAPI
+          swift build --package-path packages/BlotAPI
+          swift test --package-path packages/BlotAPI
   apple-build:
     runs-on: [self-hosted, macOS, ARM64, xcode-27]
     steps:
       - uses: actions/checkout@v4
-      - run: xcodebuild -project apps/Kiln.xcodeproj -scheme KilnMac -configuration Debug -destination 'platform=macOS' -derivedDataPath .build/xcode CODE_SIGNING_ALLOWED=NO build
-      - run: xcodebuild -project apps/Kiln.xcodeproj -scheme KilnIOS -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath .build/xcode-ios CODE_SIGNING_ALLOWED=NO build
+      - run: xcodebuild -project apps/Blot.xcodeproj -scheme BlotMac -configuration Debug -destination 'platform=macOS' -derivedDataPath .build/xcode CODE_SIGNING_ALLOWED=NO build
+      - run: xcodebuild -project apps/Blot.xcodeproj -scheme BlotIOS -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath .build/xcode-ios CODE_SIGNING_ALLOWED=NO build

@@ -1,0 +1,11 @@
+{
+  "id": "57a40946-c79b-4f3d-ab81-d8da50ad278f",
+  "projectId": "8a0f0ac0-ae54-4f1f-afbc-157ad34bf7ce",
+  "runId": "bbf2a21a-4eb5-490e-86b6-3a43b451c81d",
+  "title": "Task",
+  "acceptanceCriteria": [
+    "Done"
+  ],
+  "dependencyIds": [],
+  "createdAt": "2026-10-11T08:00:00Z"
+}
