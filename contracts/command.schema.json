@@ -1,45 +1,83 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Blot command v2",
   "type": "object",
   "required": [
     "schemaVersion",
     "commandId",
     "type",
-    "projectId",
-    "expectedVersion",
     "payload"
   ],
   "properties": {
     "schemaVersion": {
-      "const": 1
+      "const": 2
     },
     "commandId": {
       "type": "string",
       "format": "uuid"
     },
+    "type": {
+      "enum": [
+        "project.create",
+        "project.archive",
+        "project.delete",
+        "conversation.create",
+        "conversation.send_message",
+        "generation.cancel",
+        "generation.retry",
+        "memory.save",
+        "memory.delete",
+        "provider.settings",
+        "device.pair",
+        "device.approve",
+        "device.revoke",
+        "budget.increase",
+        "profile.save",
+        "run.create",
+        "run.plan.approve",
+        "run.pause",
+        "run.resume",
+        "run.stop",
+        "run.steer",
+        "run.accept",
+        "task.retry",
+        "permission.grant",
+        "permission.deny",
+        "permission.revoke",
+        "user.answer",
+        "skill.save",
+        "skill.delete",
+        "automation.save",
+        "automation.run_now",
+        "automation.delete",
+        "git.prepare_commit",
+        "git.prepare_push",
+        "git.execute",
+        "git.reconcile",
+        "tool.reconcile",
+        "tool.abandon",
+        "legacy.adopt",
+        "project.access",
+        "conversation.update",
+        "message.delete"
+      ]
+    },
     "projectId": {
-      "type": "string",
+      "type": [
+        "string",
+        "null"
+      ],
       "format": "uuid"
     },
-    "type": {
-      "const": "run.create"
-    },
     "expectedVersion": {
-      "type": "integer",
+      "type": [
+        "integer",
+        "null"
+      ],
       "minimum": 0
     },
     "payload": {
-      "type": "object",
-      "required": [
-        "goal"
-      ],
-      "properties": {
-        "goal": {
-          "type": "string",
-          "minLength": 1
-        }
-      },
-      "additionalProperties": false
+      "type": "object"
     }
   },
   "additionalProperties": false

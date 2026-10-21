@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "eventId": "90b8dcd8-949b-4726-88c3-f0e818559c33",
+  "seq": "1",
+  "projectId": "8a0f0ac0-ae54-4f1f-afbc-157ad34bf7ce",
+  "runId": null,
+  "entityId": "57a40946-c79b-4f3d-ab81-d8da50ad278f",
+  "entityVersion": 0,
+  "occurredAt": "2026-10-11T08:00:00Z",
+  "type": "project.created",
+  "payload": {
+    "name": "Blot"
+  }
+}

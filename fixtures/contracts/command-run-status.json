@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "commandId": "57a40946-c79b-4f3d-ab81-d8da50ad278f",
+  "type": "run.status.change",
+  "payload": {
+    "runId": "bbf2a21a-4eb5-490e-86b6-3a43b451c81d",
+    "expectedVersion": 0,
+    "status": "PLANNING"
+  }
+}

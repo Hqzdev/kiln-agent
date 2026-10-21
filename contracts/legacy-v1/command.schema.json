@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "commandId",
+    "type",
+    "payload"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "commandId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "projectId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "type": {
+      "enum": [
+        "project.create",
+        "run.create",
+        "run.status.change",
+        "specification.revision.create",
+        "task.create"
+      ]
+    },
+    "expectedVersion": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "project.create"
+        },
+        "payload": {
+          "type": "object",
+          "required": [
+            "name",
+            "repositoryPath"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "repositoryPath": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "run.create"
+        },
+        "payload": {
+          "type": "object",
+          "required": [
+            "goal"
+          ],
+          "properties": {
+            "goal": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "projectId"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "run.status.change"
+        },
+        "payload": {
+          "type": "object",
+          "required": [
+            "runId",
+            "expectedVersion",
+            "status"
+          ],
+          "properties": {
+            "runId": {
+              "type": "string",
+              "minLength": 1,
+              "format": "uuid"
+            },
+            "expectedVersion": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "status": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "specification.revision.create"
+        },
+        "payload": {
+          "type": "object",
+          "required": [
+            "runId",
+            "content"
+          ],
+          "properties": {
+            "runId": {
+              "type": "string",
+              "minLength": 1,
+              "format": "uuid"
+            },
+            "content": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "task.create"
+        },
+        "payload": {
+          "type": "object",
+          "required": [
+            "projectId",
+            "runId",
+            "title",
+            "acceptanceCriteria",
+            "dependencyIds"
+          ],
+          "properties": {
+            "projectId": {
+              "type": "string",
+              "minLength": 1,
+              "format": "uuid"
+            },
+            "runId": {
+              "type": "string",
+              "minLength": 1,
+              "format": "uuid"
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "acceptanceCriteria": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "dependencyIds": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

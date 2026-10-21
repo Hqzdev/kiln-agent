@@ -15,17 +15,8 @@ export function Brand({ icon, size = 24, color = "currentColor" }) {
 
 export const GithubMark = (p) => <Brand icon={siGithub} {...p} />;
 
-export function KilnArch({ size = 56, stroke = "#EDEDED", ember = "#EDEDED", weight }) {
-  const w = weight ?? size * 0.125;
-  return (
-    <svg width={size} height={size * (64 / 56)} viewBox="0 0 56 64" aria-hidden>
-      <path
-        d={`M${w / 2} ${64 - w / 2} V28 a${28 - w / 2} ${28 - w / 2} 0 0 1 ${56 - w} 0 V${64 - w / 2} Z`}
-        fill="none" stroke={stroke} strokeWidth={w} strokeLinejoin="round"
-      />
-      <rect x="18" y="42" width="20" height="7" rx="2" fill={ember} />
-    </svg>
-  );
+export function BlotArch({ size = 56, stroke = "var(--text)", ember = "var(--ember)" }) {
+  return <BuddyFace size={size} stroke={stroke} ember={ember} />;
 }
 
 export function AppIcon({ size = 88, happy = false }) {
@@ -113,13 +104,13 @@ export function Composer({ text, placeholder, ctx = ["project", "env", "branch"]
         </div>
       )}
       <div className="input" style={textColor ? { color: textColor } : undefined}>
-        {text ?? placeholder ?? "Ask Kiln to build, fix or explain anything in tradr"}
+        {text ?? placeholder ?? "Ask Blot to build, fix or explain anything in tradr"}
       </div>
       <div className="tools">
         <span className="icon-btn"><Plus size={16} /></span>
         {tools.includes("approval") && <Chip icon={ShieldCheck} chevron>Ask before running</Chip>}
         <span style={{ flex: 1 }} />
-        {tools.includes("model") && <Chip icon={Sparkle} chevron>Kiln 1 · High</Chip>}
+        {tools.includes("model") && <Chip icon={Sparkle} chevron>Blot 1 · High</Chip>}
         {tools.includes("voice") && <span className="icon-btn"><Mic size={16} /></span>}
         <span className="icon-btn send"><ArrowUp size={16} /></span>
       </div>

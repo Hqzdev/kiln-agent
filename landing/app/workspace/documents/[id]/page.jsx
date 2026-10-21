@@ -15,7 +15,7 @@ export function generateStaticParams() { return documents.map((document) => ({ i
 export async function generateMetadata({ params }) {
   const { id } = await params;
   const document = getDocument(id);
-  return { title: document ? `Kiln — ${document.title}` : "Kiln — документ" };
+  return { title: document ? `Blot — ${document.title}` : "Blot — документ" };
 }
 
 export default async function DocumentPage({ params }) {
@@ -24,7 +24,7 @@ export default async function DocumentPage({ params }) {
   if (!document) notFound();
   const content = await readFile(join(process.cwd(), "..", "docs", document.path.slice("docs/".length)), "utf8");
   const title = content.split("\n")[0].replace(/^# /, "");
-  return <main className="ws-doc-page" lang="ru">
+  return <main className="ws-doc-page" lang="ru" id="main-content" tabIndex={-1}>
     <Link className="ws-doc-back" href={`/workspace#${document.completed ? "completed" : "tasks"}`}><ArrowLeft size={14} />{document.completed ? "К выполненным задачам" : "К рабочей среде"}</Link>
     <header className="ws-doc-header"><div className="ws-doc-meta"><span>{document.taskId || "АРХИТЕКТУРА"}</span><span className={document.completed ? "completed" : ""}>{document.completed && <Check size={12} />}{document.completed ? "Задача выполнена" : "Документ подготовлен"}</span></div><h1>{title}</h1><p>{document.summary}</p><div className="ws-doc-actions"><code>{document.path}</code><a href={document.downloadUrl} download><ArrowDownToLine size={15} /> Скачать MD</a></div></header>
     <MarkdownDocument content={content} sourcePath={document.path} />

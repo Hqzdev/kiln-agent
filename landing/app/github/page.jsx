@@ -1,12 +1,15 @@
 import { Stage } from "@/components/Shell";
 import { GithubPage } from "@/components/legal";
+import { projectPlan } from "@/lib/workspace/data.mjs";
 
-export const metadata = { title: "GitHub — Kiln" };
+const progress = { done: projectPlan.completedTasks.length, total: projectPlan.tasks.length };
+
+export const metadata = { title: "GitHub — Blot" };
 
 export default function Github() {
   return (
     <Stage hint={false}>
-      <GithubPage />
+      <GithubPage progress={progress} />
     </Stage>
   );
 }

@@ -14,7 +14,7 @@ npm run build
 npm run dev
 ```
 
-`spec:generate` готовит техническое задание для скачивания и копии документов для сайта. `build` собирает сайт Next.js для выпуска. `dev` запускает сайт для разработки. Эти команды не собирают KilnMac, KilnIOS или сервер Java.
+`spec:generate` готовит техническое задание для скачивания и копии документов для сайта. `build` собирает сайт Next.js для выпуска. `dev` запускает сайт для разработки. Эти команды не собирают BlotMac, BlotIOS или сервер Java.
 
 ## Будущие команды продукта
 
@@ -27,17 +27,17 @@ npm run dev
 После создания общих пакетов Swift их тесты запускаются так:
 
 ```bash
-swift test --package-path packages/KilnDomain
-swift test --package-path packages/KilnAPI
-swift test --package-path packages/KilnDesign
-swift test --package-path packages/KilnGraph
+swift test --package-path packages/BlotDomain
+swift test --package-path packages/BlotAPI
+swift test --package-path packages/BlotDesign
+swift test --package-path packages/BlotGraph
 ```
 
 После создания общих схем Xcode можно собрать Mac и посмотреть доступные устройства для iOS:
 
 ```bash
-xcodebuild -project apps/Kiln.xcodeproj -scheme KilnMac -destination 'platform=macOS' build
-xcodebuild -project apps/Kiln.xcodeproj -scheme KilnIOS -showdestinations
+xcodebuild -project apps/Blot.xcodeproj -scheme BlotMac -destination 'platform=macOS' build
+xcodebuild -project apps/Blot.xcodeproj -scheme BlotIOS -showdestinations
 ```
 
 Из списка iOS выбирается существующий симулятор. Его ID используется для сборки и тестов. Связь устройств проверяется отдельно на настоящем iPhone.

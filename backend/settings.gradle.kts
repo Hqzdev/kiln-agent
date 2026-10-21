@@ -1,3 +1,3 @@
 pluginManagement { repositories { gradlePluginPortal(); mavenCentral() } }
-rootProject.name = "kiln-backend"
+rootProject.name = "blot-backend"
 include("core", "application", "infrastructure", "api")

@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  kiln-agent
+//  blot-agent
 //
 //  Created by Yaroslav Fairfieldd on 10/11/26.
 //

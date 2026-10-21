@@ -243,8 +243,8 @@ CommandReceipt.swift|Acknowledgement отдельно от completion|Не от�
 VersionConflict.swift|Обработка expectedVersion conflict|Перечитать состояние перед новым действием.
 CompatibilityCheck.swift|Согласование schema и версии API|Отклонить несовместимый Java-сервис.
 PreviewFixtures.swift|Previews основных экранных состояний|Открыть loading, denied, offline и long-text previews.`),
-  M15: rows(`App/KilnMacApp.swift|Главное окно и Settings scene|Открыть несколько окон и сохранить нужный проект.
-Design/KilnTheme.swift|Токены и компоненты из agent.pen|Сверить светлую и тёмную темы с макетом.
+  M15: rows(`App/BlotMacApp.swift|Главное окно и Settings scene|Открыть несколько окон и сохранить нужный проект.
+Design/BlotTheme.swift|Токены и компоненты из agent.pen|Сверить светлую и тёмную темы с макетом.
 Views/Sidebar/ProjectSidebar.swift|Проекты и команда в sidebar|Выбрать проект и сохранить выделение после обновления.
 Views/Projects/AddRepositoryView.swift|Выбор и проверка репозитория|Отклонить не-repo и сохранить dirty tree.
 Views/Tasks/NewTaskView.swift|Форма нового задания|Отправить цель с контекстом выбранного проекта.
@@ -266,7 +266,7 @@ Views/Settings/PermissionSettingsView.swift|Права и доверенные �
 Views/Settings/EnvironmentSettingsView.swift|Окружение и диагностика|Показать отсутствие Xcode runner и ошибку Java.
 Views/Extensions/ExtensionsView.swift|Hiring, skills и schedules|Включить skill без расширения прав.
 Views/Commands/CommandPalette.swift|Палитра основных действий|Найти команду и перейти к нужному экрану.
-Commands/KilnCommands.swift|Горячие клавиши|Пройти новые задачу, поиск и остановку с клавиатуры.
+Commands/BlotCommands.swift|Горячие клавиши|Пройти новые задачу, поиск и остановку с клавиатуры.
 Stores/SelectionStore.swift|Единое выделение задачи и агента|Выбор в графе обновляет карточку и чат.
 Views/Layout/WorkspaceLayout.swift|Сворачиваемые панели маленького окна|Уменьшить окно без обрезанных действий.
 Accessibility/WorkspaceAccessibility.swift|VoiceOver, клавиатура и Reduce Motion|Пройти основные действия без мыши.

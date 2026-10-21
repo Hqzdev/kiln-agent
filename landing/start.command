@@ -11,5 +11,5 @@ if [ ! -d node_modules ]; then
   npm install --no-audit --no-fund || { echo "npm install упал"; read -k 1; exit 1; }
 fi
 (sleep 5; open "http://localhost:3000") &
-echo "→ Kiln landing: http://localhost:3000  (Ctrl+C чтобы остановить)"
+echo "→ Blot landing: http://localhost:3000  (Ctrl+C чтобы остановить)"
 npm run dev

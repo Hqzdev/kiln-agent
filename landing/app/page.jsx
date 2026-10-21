@@ -1,8 +1,11 @@
 import { Stage } from "@/components/Shell";
 import {
   Manifesto, Tasks, AgentCrop, Builder, PromptStack, BetaPass, AgentLoop, CommandCard,
-  Keycaps, DiffCrop, LocalType, KilnMark, AgentLog, Sandbox, DownloadCard,
+  Keycaps, DiffCrop, LocalType, BlotMark, AgentLog, Sandbox, DownloadCard,
 } from "@/components/home";
+import { projectPlan } from "@/lib/workspace/data.mjs";
+
+const progress = { done: projectPlan.completedTasks.length, total: projectPlan.tasks.length };
 
 export default function Home() {
   return (
@@ -11,7 +14,7 @@ export default function Home() {
         <Manifesto />
         <Tasks />
         <AgentCrop />
-        <Builder />
+        <Builder progress={progress} />
         <PromptStack />
         <BetaPass />
         <AgentLoop />
@@ -19,7 +22,7 @@ export default function Home() {
         <Keycaps />
         <DiffCrop />
         <LocalType />
-        <KilnMark />
+        <BlotMark />
         <AgentLog />
         <Sandbox />
         <DownloadCard />

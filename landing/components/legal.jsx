@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, useInView } from "motion/react";
+import { motion, useInView, useReducedMotion } from "motion/react";
 import {
   HardDrive, KeyRound, History, GitCompare, Mail, Bug, Send, ShieldCheck, Star, GitFork, Users, CircleDot,
   ArrowUpRight, GitCommitHorizontal, Scale, BookOpen,
@@ -71,16 +71,16 @@ export function PrivacyPage() {
           <header className="prose-head">
             <span style={{ display: "flex", gap: 8, alignItems: "center" }}><Label dot={false}>Last updated · Oct 11, 2026</Label><Badge>Draft</Badge></span>
             <h1>Privacy policy</h1>
-            <p className="lead">This page explains what Kiln collects, why, and how to make it go away. It&apos;s written for people, not lawyers — the formal version will replace this draft before the public launch.</p>
+            <p className="lead">This page explains what Blot collects, why, and how to make it go away. It&apos;s written for people, not lawyers — the formal version will replace this draft before the public launch.</p>
           </header>
-          <Reveal id="summary"><h2>The short version</h2><p>Kiln is a Mac app. It reads and edits code on your computer. To do the thinking it sends the relevant parts of a task to the model you choose. Everything else — your repositories, history, diffs and keys — stays on your Mac.</p></Reveal>
-          <Reveal id="on-device"><h2>What stays on your Mac</h2><ul><li>Repositories, worktrees and every diff Kiln makes.</li><li>Task history, plans and terminal output in <code>~/Library/Kiln</code>.</li><li>API keys, stored in the macOS Keychain and never synced by us.</li></ul></Reveal>
-          <Reveal id="leaves"><h2>What leaves your Mac</h2><ul><li><strong>Task context</strong> — the prompt and the files Kiln decides it needs, sent to your model provider.</li><li><strong>Account</strong> — your email and sign-in method.</li><li><strong>Diagnostics</strong> — crash reports only if you turn them on; anonymous counts such as tasks per day.</li></ul></Reveal>
-          <Reveal id="models"><h2>Model providers</h2><p>With Kiln credits, requests go through our servers to the provider without being stored. With your own key, they go straight from your Mac to the provider and their terms apply.</p><Note>Ollama models run locally — nothing leaves your Mac at all.</Note></Reveal>
+          <Reveal id="summary"><h2>The short version</h2><p>Blot is a Mac app. It reads and edits code on your computer. To do the thinking it sends the relevant parts of a task to the model you choose. Everything else — your repositories, history, diffs and keys — stays on your Mac.</p></Reveal>
+          <Reveal id="on-device"><h2>What stays on your Mac</h2><ul><li>Repositories, worktrees and every diff Blot makes.</li><li>Task history, plans and terminal output in <code>~/Library/Blot</code>.</li><li>API keys, stored in the macOS Keychain and never synced by us.</li></ul></Reveal>
+          <Reveal id="leaves"><h2>What leaves your Mac</h2><ul><li><strong>Task context</strong> — the prompt and the files Blot decides it needs, sent to your model provider.</li><li><strong>Account</strong> — your email and sign-in method.</li><li><strong>Diagnostics</strong> — crash reports only if you turn them on; anonymous counts such as tasks per day.</li></ul></Reveal>
+          <Reveal id="models"><h2>Model providers</h2><p>With Blot credits, requests go through our servers to the provider without being stored. With your own key, they go straight from your Mac to the provider and their terms apply.</p><Note>Ollama models run locally — nothing leaves your Mac at all.</Note></Reveal>
           <Reveal id="never"><h2>What we never do</h2><ul><li>Train models on your code or prompts.</li><li>Sell or rent any data about you.</li><li>Read your repositories on our servers.</li></ul></Reveal>
-          <Reveal id="retention"><h2>Retention &amp; deletion</h2><p>Account data is kept while your account is active and deleted within 30 days after you close it. Local data is deleted when you remove <code>~/Library/Kiln</code> or press <strong>Settings → Account → Delete all data</strong>.</p></Reveal>
+          <Reveal id="retention"><h2>Retention &amp; deletion</h2><p>Account data is kept while your account is active and deleted within 30 days after you close it. Local data is deleted when you remove <code>~/Library/Blot</code> or press <strong>Settings → Account → Delete all data</strong>.</p></Reveal>
           <Reveal id="rights"><h2>Your rights</h2><p>You can ask for a copy of your data, correct it, or have it deleted at any time — wherever you live.</p></Reveal>
-          <Reveal id="contact"><h2>Contact</h2><p>Questions go to <a href="mailto:privacy@kiln.dev">privacy@kiln.dev</a>. A human answers, usually within two days.</p></Reveal>
+          <Reveal id="contact"><h2>Contact</h2><p>Questions go to <a href="mailto:privacy@blot.dev">privacy@blot.dev</a>. A human answers, usually within two days.</p></Reveal>
         </article>
       </div>
     </>
@@ -89,9 +89,11 @@ export function PrivacyPage() {
 
 /* ============ GITHUB ============ */
 function useCount(to, on) {
+  const reducedMotion = useReducedMotion();
   const [v, setV] = useState(0);
   useEffect(() => {
     if (!on) return;
+    if (reducedMotion) { setV(to); return; }
     let raf;
     const t0 = performance.now();
     const tick = (t) => {
@@ -101,23 +103,34 @@ function useCount(to, on) {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [on, to]);
+  }, [on, to, reducedMotion]);
   return v;
 }
 
-function Stats() {
+function Stats({ progress }) {
   const ref = useRef(null);
   const on = useInView(ref, { once: true, amount: 0.5 });
   const s = [[Star, "Stars", useCount(1284, on)], [GitFork, "Forks", useCount(96, on)], [Users, "Contributors", useCount(23, on)], [CircleDot, "Open issues", useCount(41, on)]];
   return (
     <Card ref={ref} w={2} arrow={false} artClass="pad-week">
-      <Label dot="var(--ember)">Hqzdev / kiln-skills</Label>
+      <Label dot="var(--ember)">Hqzdev / blot-skills</Label>
       <div className="metrics">
         {s.map(([I, l, v]) => (
           <div key={l} className="metric"><span style={{ display: "flex", gap: 6, alignItems: "center" }}><I size={13} />{l}</span><b>{v.toLocaleString("en-US")}</b></div>
         ))}
       </div>
-      <p style={{ fontSize: 14, color: "var(--text-2)" }}>the skills library, sandbox runner and this site are open source.</p>
+      {progress && (() => {
+        const pct = progress.total ? (progress.done / progress.total) * 100 : 0;
+        const shown = pct > 0 && pct < 1 ? "<1" : Math.round(pct);
+        return (
+          <a className="build-prog gh-prog" href="/workspace">
+            <span className="bp-top"><span className="mono">Hqzdev / blot-agent · built</span><b>{shown}%</b></span>
+            <span className="bp-bar"><motion.i initial={{ width: 0 }} animate={on ? { width: `${Math.max(pct, 1.5)}%` } : {}} transition={{ duration: 1.1, ease: [0.165, 0.84, 0.44, 1] }} /></span>
+            <span className="bp-cap mono">{progress.done} of {progress.total} workspace tasks done · roadmap to Dec 15</span>
+          </a>
+        );
+      })()}
+      {!progress && <p style={{ fontSize: 14, color: "var(--text-2)" }}>the skills library, sandbox runner and this site are open source.</p>}
     </Card>
   );
 }
@@ -196,9 +209,9 @@ function Heatmap() {
 }
 
 const REPOS = [
-  ["kiln-skills", "Community skills for Kiln — testing, release notes, framework conventions.", "Markdown", "#5D5D5D", 1284],
-  ["kiln-sandbox", "The isolated shell Kiln runs commands in. macOS seatbelt + network policy.", "Swift", "#F05138", 412],
-  ["kiln-site", "This landing page. Next.js, Motion, no gradients.", "JavaScript", "#D9A84A", 88],
+  ["blot-skills", "Community skills for Blot — testing, release notes, framework conventions.", "Markdown", "#5D5D5D", 1284],
+  ["blot-sandbox", "The isolated shell Blot runs commands in. macOS seatbelt + network policy.", "Swift", "#F05138", 412],
+  ["blot-site", "This landing page. Next.js, Motion, no gradients.", "JavaScript", "#D9A84A", 88],
 ];
 function Repo({ name, desc, lang, color, stars }) {
   return (
@@ -250,15 +263,15 @@ function Commits() {
   );
 }
 
-export function GithubPage() {
+export function GithubPage({ progress }) {
   return (
     <div className="grid">
       <Hero
-        title={<>Kiln<span className="muted"> is built in public.</span></>}
+        title={<>Blot<span className="muted"> is built in public.</span></>}
         lines={["the agent is closed. the parts you touch are not.", "skills, the sandbox and this site are MIT.", "issues are the roadmap.", { b: "every PR gets a reply within a day*." }, "good first issues are tagged."]}
         footnote="usually within hours. it's one person."
       />
-      <Stats />
+      <Stats progress={progress} />
       <StarCard />
       <License />
       <Heatmap />

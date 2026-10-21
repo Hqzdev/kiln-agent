@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence, useInView, useMotionValue, useSpring, useTransform, animate } from "motion/react";
+import { motion, AnimatePresence, useInView, useMotionValue, useSpring, useTransform, animate, useReducedMotion } from "motion/react";
 import {
   Sparkle, Box, HardDrive, Folder, ShieldCheck, ArrowRight, Mail, Check, Rss, Send,
   GitCommitHorizontal, SquareTerminal, X,
@@ -11,16 +11,21 @@ import { siGithub, siGit, siLinear, siFigma, siNotion, siVercel } from "simple-i
 import Card from "./Card";
 import { Label, Badge, Traffic, Btn, Step, Approval, DiffLine, PlanItem, Brand, TerminalBlock } from "./ui";
 import { play } from "@/lib/sound";
+import { emailDraft } from "@/lib/emailDraft.mjs";
+import FormFeedback from "./FormFeedback";
+import FormInput from "./FormInput";
 
 const OUT_BACK = [0.175, 0.885, 0.32, 1.275];
 
 function useCountUp(to, active, { duration = 1.1, decimals = 0 } = {}) {
+  const reducedMotion = useReducedMotion();
   const [v, setV] = useState(0);
   useEffect(() => {
     if (!active) return;
+    if (reducedMotion) { setV(to); return; }
     const c = animate(0, to, { duration, ease: [0.19, 1, 0.22, 1], onUpdate: (x) => setV(x) });
     return () => c.stop();
-  }, [active, to, duration]);
+  }, [active, to, duration, reducedMotion]);
   return v.toFixed(decimals);
 }
 
@@ -72,7 +77,7 @@ export function BigType({ words, size = 66, caption }) {
 /* ============ FEATURES ============ */
 
 const MODELS = [
-  [Sparkle, "Kiln 1 · High", "default"],
+  [Sparkle, "Blot 1 · High", "default"],
   [Box, "Anthropic", "your key"],
   [Box, "OpenAI", "your key"],
   [Box, "Google", "your key"],
@@ -85,7 +90,7 @@ export function AnyModel() {
       <div className="feat-head" style={{ left: 24, top: 28, width: 236 }}>
         <Label dot="var(--ember)">Models</Label>
         <p className="h-card">Any model. Switch per task.</p>
-        <p className="feat-desc" style={{ fontSize: 15 }}>Bring your own key or use Kiln credits. No vendor lock-in.</p>
+        <p className="feat-desc" style={{ fontSize: 15 }}>Bring your own key or use Blot credits. No vendor lock-in.</p>
       </div>
       <div className="model-menu">
         <div className="mm-label">Model for this task</div>
@@ -110,7 +115,7 @@ export function Cost() {
     <Card ref={ref} caption={{ title: "Cost", text: "known before it runs" }} artClass="pad24">
       <Label>Cost up front</Label>
       <b className="big-num">${v}</b>
-      <p className="feat-desc">estimated before Kiln starts. hard cap per task.</p>
+      <p className="feat-desc">estimated before Blot starts. hard cap per task.</p>
       <div className="cap">
         <span className="track"><motion.i initial={{ width: 0 }} animate={inView ? { width: "21%" } : {}} transition={{ duration: 1.1, ease: [0.19, 1, 0.22, 1] }} /></span>
         <span className="mono">cap $2.00</span>
@@ -192,6 +197,7 @@ export function ReviewFirst() {
 }
 
 function useTilt(max = 3) {
+  const reducedMotion = useReducedMotion();
   const rx = useMotionValue(0);
   const ry = useMotionValue(0);
   const rotate = useSpring(useTransform(rx, [-0.5, 0.5], [-max, max]), { stiffness: 180, damping: 20 });
@@ -199,6 +205,7 @@ function useTilt(max = 3) {
   const y = useSpring(useTransform(ry, [-0.5, 0.5], [-8, 8]), { stiffness: 180, damping: 20 });
   const handlers = {
     onMouseMove: (e) => {
+      if (reducedMotion) return;
       const r = e.currentTarget.getBoundingClientRect();
       rx.set((e.clientX - r.left) / r.width - 0.5);
       ry.set((e.clientY - r.top) / r.height - 0.5);
@@ -235,7 +242,7 @@ export function LocalHistory() {
     <Card caption={{ title: "Local-first", text: "your disk" }} artClass="pad24 gap12">
       <Label>Local-first</Label>
       <p className="h-card-sm">History and code stay on your Mac.</p>
-      <div className="path-box"><Folder size={14} color="var(--text-3)" /><span className="mono">~/Library/Kiln/tasks</span></div>
+      <div className="path-box"><Folder size={14} color="var(--text-3)" /><span className="mono">~/Library/Blot/tasks</span></div>
     </Card>
   );
 }
@@ -276,7 +283,7 @@ const PY = (v) => H - ((v - 15) / 45) * H;
 const SERIES = [
   ["Astra 6", "#C4C4C4", [[0.12, 22], [0.22, 27], [0.4, 31], [0.7, 33], [1.1, 36]]],
   ["Opus 5.5", "#5D5D5D", [[0.35, 31], [0.6, 37], [0.9, 42], [1.3, 46], [1.9, 50]]],
-  ["Kiln 1", "var(--ember)", [[0.06, 34], [0.1, 41], [0.16, 47], [0.28, 52], [0.45, 56]]],
+  ["Blot 1", "var(--ember)", [[0.06, 34], [0.1, 41], [0.16, 47], [0.28, 52], [0.45, 56]]],
 ];
 const EFF = ["low", "med", "high", "xhigh", "max"];
 
@@ -328,7 +335,7 @@ export function Benchmark() {
                       style={{ transformOrigin: `${PX(x)}px ${PY(y)}px` }}
                       transition={{ duration: 0.3, delay: 0.2 + si * 0.25 + i * 0.15, ease: OUT_BACK }}
                     />
-                    {n === "Kiln 1" && <text x={PX(x)} y={PY(y) - 16} textAnchor="middle" className="eff">{EFF[i]}</text>}
+                    {n === "Blot 1" && <text x={PX(x)} y={PY(y) - 16} textAnchor="middle" className="eff">{EFF[i]}</text>}
                   </g>
                 ))}
               </g>
@@ -366,15 +373,16 @@ export function CTA({ title = "Try it before everyone else.", text = "Free durin
 
 /* ============ BETA ============ */
 
-function Chips({ options, multi, init }) {
+function Chips({ options, multi, init, name }) {
   const [sel, setSel] = useState(init);
   return (
     <div className="chips">
+      <input type="hidden" name={name} value={sel.join(", ")} />
       {options.map((o) => {
         const on = sel.includes(o);
         return (
           <motion.button
-            type="button" key={o} className={`pick ${on ? "on" : ""}`} whileTap={{ scale: 0.94 }}
+            type="button" key={o} aria-pressed={on} className={`pick ${on ? "on" : ""}`} whileTap={{ scale: 0.94 }}
             onClick={() => {
               play("swatch");
               setSel((s) => (multi ? (on ? s.filter((x) => x !== o) : [...s, o]) : [o]));
@@ -396,29 +404,31 @@ export function Signup() {
       <form
         className="manifesto signup"
         style={{ gap: 18, padding: 48 }}
-        onSubmit={(e) => { e.preventDefault(); setDone(true); play("success"); }}
+        onChange={() => setDone(false)}
+        onSubmit={(e) => {
+          e.preventDefault();
+          window.location.href = emailDraft("Blot beta access", Object.fromEntries(new FormData(e.currentTarget)));
+          setDone(true);
+        }}
       >
-        <h1 className="h-display"><span className="muted">Join the </span>Kiln<span className="muted"> beta.</span></h1>
+        <h1 className="h-display"><span className="muted">Join the </span>Blot<span className="muted"> beta.</span></h1>
         <p style={{ fontSize: 18, color: "var(--text-2)" }}>free while in beta. seats open in waves.</p>
         <div className="rule" />
         <label className="field">
           <span>Work email</span>
-          <span className="input-wrap">
-            <Mail size={16} color="var(--text-3)" />
-            <input type="email" required placeholder="you@company.com" value={email} onChange={(e) => setEmail(e.target.value)} />
-          </span>
+          <FormInput type="email" name="Email" aria-label="Work email" autoComplete="email" icon={Mail} placeholder="you@company.com" value={email} onChange={(e) => setEmail(e.target.value)} />
         </label>
-        <div className="field"><span>What do you build?</span><Chips multi options={["Web", "iOS / macOS", "Backend", "Data / ML"]} init={["Web", "iOS / macOS"]} /></div>
-        <div className="field"><span>What do you use today?</span><Chips options={["Codex", "Claude Code", "Cursor", "Nothing yet"]} init={["Claude Code"]} /></div>
+        <div className="field"><span>What do you build?</span><Chips name="Projects" multi options={["Web", "iOS / macOS", "Backend", "Data / ML"]} init={["Web", "iOS / macOS"]} /></div>
+        <div className="field"><span>What do you use today?</span><Chips name="Current tool" options={["Codex", "Claude Code", "Cursor", "Nothing yet"]} init={["Claude Code"]} /></div>
         <div className="field" style={{ paddingTop: 6 }}>
-          <motion.button type="submit" className={`submit ${done ? "done" : ""}`} whileTap={{ scale: 0.97 }} layout>
+          <motion.button type="submit" className="submit" whileTap={{ scale: 0.97 }} layout>
             <AnimatePresence mode="wait">
               <motion.span key={String(done)} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.18 }}>
-                {done ? <><Check size={18} />You&apos;re on the list</> : <><ArrowRight size={18} />Request access</>}
+                <><Mail size={18} />Request access by email</>
               </motion.span>
             </AnimatePresence>
           </motion.button>
-          <div className="footnote" style={{ fontSize: 13 }}><span>*</span><span>one email when your seat opens. no newsletter.</span></div>
+          <FormFeedback>{done ? "Continue in your email app and send the request. If it did not open, email hello@blot.dev." : "Opens an email draft. Access is confirmed after a reply."}</FormFeedback>
         </div>
       </form>
     </Card>
@@ -428,7 +438,7 @@ export function Signup() {
 export function WhatYouGet() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: 0.5 });
-  const items = ["Kiln credits on us for the whole beta", "Any model with your own key", "A direct line to the builder", "Your feedback shipped in the weekly changelog"];
+  const items = ["Blot credits on us for the whole beta", "Any model with your own key", "A direct line to the builder", "Your feedback shipped in the weekly changelog"];
   return (
     <Card ref={ref} w={2} arrow={false} artClass="pad28 gap14">
       <Label dot="var(--success)">What you get</Label>
@@ -458,8 +468,8 @@ export function FirstWave() {
 
 const FAQ = [
   ["Is it free?", "Yes, for the whole beta. Pricing comes later and beta users keep a discount."],
-  ["Which models?", "Kiln 1 by default, or Anthropic, OpenAI, Google and local Ollama with your key."],
-  ["What Mac do I need?", "Apple silicon and macOS 14 Sonoma or newer."],
+  ["Which models?", "The first release uses GigaChat with your own API access. The key stays on your Mac."],
+  ["What Mac do I need?", "macOS 26 or newer. The iPhone companion requires iOS 26 or newer."],
   ["Is my code sent anywhere?", "Only to the model you pick. History and diffs stay on your Mac."],
 ];
 export function Faq() {
@@ -480,14 +490,16 @@ export function Faq() {
 export function Subscribe() {
   const [done, setDone] = useState(false);
   return (
-    <form className="subscribe" onSubmit={(e) => { e.preventDefault(); setDone(true); play("success"); }}>
-      <span className="input-wrap pill">
-        <Mail size={16} color="var(--text-3)" />
-        <input type="email" required placeholder="you@company.com" />
-      </span>
+    <form className="subscribe" onChange={() => setDone(false)} onSubmit={(e) => {
+      e.preventDefault();
+      window.location.href = emailDraft("Blot update emails", Object.fromEntries(new FormData(e.currentTarget)));
+      setDone(true);
+    }}>
+      <FormInput pill type="email" name="Email" autoComplete="email" icon={Mail} placeholder="you@company.com" aria-label="Email for updates" />
       <motion.button type="submit" className="btn emph pill sub-btn" whileTap={{ scale: 0.96 }}>
-        {done ? <><Check size={16} />Subscribed</> : "Get it weekly"}
+        Request updates
       </motion.button>
+      <FormFeedback>{done ? "Send the draft in your email app to request updates." : "Opens a request in your email app."}</FormFeedback>
     </form>
   );
 }
@@ -592,7 +604,7 @@ export function FirstCommit() {
       <Label dot={false}>First commit</Label>
       <div className="commit-box">
         <span className="mono" style={{ color: "#E36A62", fontSize: 12 }}><GitCommitHorizontal size={12} style={{ verticalAlign: -2, marginRight: 4 }} />a1f9c2e</span>
-        <span className="mono" style={{ color: "#ECECEC", fontSize: 13 }}>init: kiln can read a repo</span>
+        <span className="mono" style={{ color: "#ECECEC", fontSize: 13 }}>init: blot can read a repo</span>
         <span className="mono" style={{ color: "#8A8A8A", fontSize: 11 }}>Aug 31, 2026 · 02:14</span>
       </div>
     </Card>

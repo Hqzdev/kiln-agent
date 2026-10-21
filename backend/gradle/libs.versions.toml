@@ -4,10 +4,14 @@ sqlite = "3.53.4.0"
 jackson = "2.20.0"
 junit = "5.13.4"
 spotless = "7.2.1"
+bouncycastle = "1.86"
+mail = "2.0.5"
 [libraries]
 sqlite = { module = "org.xerial:sqlite-jdbc", version.ref = "sqlite" }
 jackson = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+bouncycastle = { module = "org.bouncycastle:bcprov-jdk18on", version.ref = "bouncycastle" }
+mail = { module = "org.eclipse.angus:jakarta.mail", version.ref = "mail" }
 [plugins]
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }

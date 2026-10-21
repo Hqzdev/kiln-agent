@@ -1,6 +1,6 @@
 "use client";
 
-// Kiln app screens rebuilt in HTML from the same mini-UI kit — no image files.
+// Blot app screens rebuilt in HTML from the same mini-UI kit — no image files.
 // Each screen is a fixed 1200×750 "window"; <ScaledScreen> scales it to any width.
 
 import {
@@ -11,9 +11,9 @@ import {
 } from "lucide-react";
 import { siApple, siGithub } from "simple-icons";
 import {
-  Traffic, Badge, Btn, Chip, Step, Approval, Composer, DiffLine, PlanItem, Changes, TerminalBlock, KilnArch, Brand, Toggle,
+  Traffic, Badge, Btn, Chip, Step, Approval, Composer, DiffLine, PlanItem, Changes, TerminalBlock, BlotArch, Brand, Toggle,
 } from "./ui";
-import { KilnBuddy } from "./buddy";
+import { BlotBuddy } from "./buddy";
 
 export const SCREEN_W = 1200;
 export const SCREEN_H = 750;
@@ -80,7 +80,7 @@ function NewTask() {
       <main className="main">
         <Head><Spacer /><Ico icon={History} /><Ico icon={Ellipsis} /></Head>
         <div className="hero">
-          <KilnBuddy size={44} stroke="var(--text-3)" ember="var(--text-3)" weight={5} />
+          <BlotBuddy size={44} stroke="var(--text-3)" ember="var(--text-3)" weight={5} />
           <p className="hero-t">What should we build in tradr?</p>
           <p className="mono" style={{ fontSize: 12, color: "var(--text-3)" }}>main · 2 uncommitted files · last run 2h ago</p>
           <div style={{ display: "flex", gap: 8, paddingTop: 8 }}>
@@ -91,7 +91,7 @@ function NewTask() {
         </div>
         <div className="composer-area">
           <Composer style={{ width: 680 }} />
-          <span style={{ fontSize: 11, color: "var(--text-3)" }}>Kiln can make mistakes. Review every diff before you merge.</span>
+          <span style={{ fontSize: 11, color: "var(--text-3)" }}>Blot can make mistakes. Review every diff before you merge.</span>
         </div>
       </main>
     </div>
@@ -106,7 +106,7 @@ function Working() {
       <main className="main">
         <Head>
           <b style={{ fontWeight: 500 }}>Починить расчёт PnL</b>
-          <Badge>kiln/fix-pnl-rounding</Badge>
+          <Badge>blot/fix-pnl-rounding</Badge>
           <Spacer />
           <Chip icon={Activity}><span style={{ color: "var(--text-2)" }}>Working · 1m 12s</span></Chip>
           <Ico icon={PanelRight} /><Ico icon={Ellipsis} />
@@ -134,7 +134,7 @@ function Working() {
           </div>
         </div>
         <div className="composer-area" style={{ paddingTop: 0 }}>
-          <Composer ctx={[]} placeholder="Reply to steer Kiln · Esc to stop" style={{ width: 680 }} />
+          <Composer ctx={[]} placeholder="Reply to steer Blot · Esc to stop" style={{ width: 680 }} />
         </div>
       </main>
     </div>
@@ -226,7 +226,7 @@ function Palette() {
           <SI icon={FileCode} meta="tradr">src/lib/pnl.test.ts</SI>
           <div className="sb-sec" style={{ padding: "12px 10px 4px" }}>Actions</div>
           <SI icon={SquarePen} meta="↵">New task about “pnl”</SI>
-          <SI icon={GitPullRequest} meta="⌘⇧P">Open PR for kiln/fix-pnl-rounding</SI>
+          <SI icon={GitPullRequest} meta="⌘⇧P">Open PR for blot/fix-pnl-rounding</SI>
         </div>
         <div className="mhead" style={{ borderTop: "1px solid var(--border)", borderBottom: 0, height: 36, gap: 16, padding: "0 16px" }}>
           {["↑↓ navigate", "↵ open", "⌘↵ open in new window"].map((t) => <span key={t} style={{ fontSize: 11, color: "var(--text-3)" }}>{t}</span>)}
@@ -274,7 +274,7 @@ function Automations() {
             <div className="sb-sec">Scheduled</div>
             <LI icon={Clock3} t="Triage new issues" s="Weekdays at 09:00 · tradr" sel />
             <LI icon={Moon} t="Nightly dependency bump" s="Every day at 03:00 · tradr" />
-            <LI icon={FileText} t="Draft the weekly changelog" s="Mondays at 10:00 · kiln" />
+            <LI icon={FileText} t="Draft the weekly changelog" s="Mondays at 10:00 · blot" />
             <LI icon={FlaskConical} t="Hunt flaky tests" s="Fridays at 18:00 · kodshag" on={false} />
             <div className="sb-sec">On events</div>
             <LI icon={GitPullRequest} t="Review every new PR" s="Pull request opened · tradr" />
@@ -291,7 +291,7 @@ function Automations() {
             </div>
             <Group title="Trigger">
               <Row t="Schedule" d="Runs in the background, even with the window closed." trail={<Sel icon={Clock3}>Weekdays · 09:00</Sel>} />
-              <Row t="Project" d="Kiln works in a fresh worktree of this project." trail={<Sel icon={Folder}>tradr</Sel>} />
+              <Row t="Project" d="Blot works in a fresh worktree of this project." trail={<Sel icon={Folder}>tradr</Sel>} />
               <Row t="Approvals" d="What the automation may do without asking you." trail={<Sel icon={Shield}>Labels &amp; comments only</Sel>} last />
             </Group>
             <Group title="Recent runs">
@@ -335,7 +335,7 @@ function Skills() {
               </span>
               <Btn icon={Pencil}>Edit</Btn>
             </div>
-            <Group title="When Kiln uses it">
+            <Group title="When Blot uses it">
               <Row t="Use automatically" d="Loads when a task mentions changelog, release or what's new." trail={<Toggle />} />
               <Row t="Projects" d="Where this skill is available." trail={<Sel icon={Folder}>All projects</Sel>} last />
             </Group>
@@ -382,7 +382,7 @@ function Permissions() {
         <div style={{ width: 640, display: "flex", flexDirection: "column", gap: 28 }}>
           <b style={{ fontSize: 28, fontWeight: 600, letterSpacing: -0.5 }}>Permissions</b>
           <Group title="Sandbox">
-            <Row t="Sandbox mode" d="Where Kiln may write. Full access edits any file without asking." trail={seg(["Read-only", "Workspace", "Full access"], "Workspace")} />
+            <Row t="Sandbox mode" d="Where Blot may write. Full access edits any file without asking." trail={seg(["Read-only", "Workspace", "Full access"], "Workspace")} />
             <Row t="Network access" d="When off, package installs stop and ask first." trail={<Toggle on={false} />} last />
           </Group>
           <Group title="Approvals">
@@ -415,10 +415,10 @@ function Login() {
       <div className="mhead" style={{ borderBottom: 0, padding: "0 18px" }}><Traffic /></div>
       <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", paddingBottom: 40 }}>
         <div style={{ width: 340, display: "flex", flexDirection: "column", alignItems: "center", gap: 20 }}>
-          <KilnBuddy size={40} stroke="var(--text)" ember="var(--text)" weight={6} />
+          <BlotBuddy size={40} stroke="var(--text)" ember="var(--text)" weight={6} />
           <div style={{ textAlign: "center" }}>
             <b style={{ fontSize: 26, fontWeight: 600, letterSpacing: -0.5 }}>Welcome back</b>
-            <p style={{ fontSize: 14, color: "var(--text-2)", marginTop: 6 }}>Log in to pick up your tasks where Kiln left off.</p>
+            <p style={{ fontSize: 14, color: "var(--text-2)", marginTop: 6 }}>Log in to pick up your tasks where Blot left off.</p>
           </div>
           <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 8 }}>
             <P icon={<Brand icon={siApple} size={16} />}>Continue with Apple</P>
@@ -444,7 +444,7 @@ export const SCREENS = [
   { C: Review, name: "Review", desc: "Every task ends as a diff. Commit or open a PR in one click." },
   { C: Palette, name: "Command palette", desc: "⌘K finds tasks, files and actions across projects." },
   { C: Automations, name: "Automations", desc: "Scheduled and event-driven jobs that run while you sleep." },
-  { C: Skills, name: "Skills", desc: "Reusable instructions Kiln loads when a task needs them." },
+  { C: Skills, name: "Skills", desc: "Reusable instructions Blot loads when a task needs them." },
   { C: Permissions, name: "Permissions", desc: "You decide what runs without asking — per Mac or per project." },
   { C: Login, name: "Sign in", desc: "Apple, Google, GitHub or a code to your email." },
 ];
