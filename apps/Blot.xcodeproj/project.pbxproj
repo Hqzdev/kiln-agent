@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-        B20000000000000000000001 /* BlotAPI Mac */ = {isa = PBXBuildFile; productRef = B20000000000000000000002; };
-        B20000000000000000000003 /* BlotAPI iOS */ = {isa = PBXBuildFile; productRef = B20000000000000000000004; };
+		B20000000000000000000001 /* BlotAPI in Frameworks */ = {isa = PBXBuildFile; productRef = B20000000000000000000002 /* BlotAPI */; };
+		B20000000000000000000003 /* BlotAPI in Frameworks */ = {isa = PBXBuildFile; productRef = B20000000000000000000004 /* BlotAPI */; };
 /* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		13CB0E71307BE25300C7CE8A /* Blot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A20000000000000000000004 /* BlotIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlotIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -37,13 +38,13 @@
 		13CB0E6E307BE25300C7CE8A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-                B20000000000000000000001,
+				B20000000000000000000001 /* BlotAPI in Frameworks */,
 			);
 		};
 		A20000000000000000000007 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-                B20000000000000000000003,
+				B20000000000000000000003 /* BlotAPI in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -86,7 +87,9 @@
 				A20000000000000000000002 /* shared */,
 			);
 			name = Blot;
-            packageProductDependencies = (B20000000000000000000002);
+			packageProductDependencies = (
+				B20000000000000000000002 /* BlotAPI */,
+			);
 			productName = BlotMac;
 			productReference = 13CB0E71307BE25300C7CE8A /* Blot.app */;
 			productType = "com.apple.product-type.application";
@@ -106,7 +109,9 @@
 				A20000000000000000000003 /* ios/BlotIOS */,
 			);
 			name = BlotIOS;
-            packageProductDependencies = (B20000000000000000000004);
+			packageProductDependencies = (
+				B20000000000000000000004 /* BlotAPI */,
+			);
 			productName = BlotIOS;
 			productReference = A20000000000000000000004 /* BlotIOS.app */;
 			productType = "com.apple.product-type.application";
@@ -138,10 +143,12 @@
 			);
 			mainGroup = 13CB0E68307BE25300C7CE8A;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B20000000000000000000005 /* XCLocalSwiftPackageReference "../packages/BlotAPI" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 13CB0E72307BE25300C7CE8A /* Products */;
-			packageReferences = (B20000000000000000000005);
-            projectDirPath = "";
+			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				13CB0E70307BE25300C7CE8A /* Blot */,
@@ -176,13 +183,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin XCLocalSwiftPackageReference section */
-        B20000000000000000000005 = {isa = XCLocalSwiftPackageReference; relativePath = ../packages/BlotAPI; };
-/* End XCLocalSwiftPackageReference section */
-/* Begin XCSwiftPackageProductDependency section */
-        B20000000000000000000002 = {isa = XCSwiftPackageProductDependency; productName = BlotAPI; };
-        B20000000000000000000004 = {isa = XCSwiftPackageProductDependency; productName = BlotAPI; };
-/* End XCSwiftPackageProductDependency section */
 /* Begin XCBuildConfiguration section */
 		13CB0E7A307BE25400C7CE8A /* Debug configuration for PBXProject "Blot" */ = {
 			isa = XCBuildConfiguration;
@@ -305,23 +305,23 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macos/BlotMac/BlotMac.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9RPQ7DDSR4;
 				ENABLE_APP_SANDBOX = YES;
-                CODE_SIGN_ENTITLEMENTS = macos/BlotMac/BlotMac.entitlements;
-                ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
-                ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
-                ENABLE_RESOURCE_ACCESS_BLUETOOTH = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = YES;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				GENERATE_INFOPLIST_FILE = YES;
-                INFOPLIST_FILE = BackendInfo.plist;
+				INFOPLIST_FILE = BackendInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Blot;
-                INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Blot connects your iPhone to the agent running on your Mac.";
-                INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Blot uses Bluetooth to connect your trusted devices.";
-                INFOPLIST_KEY_NSCameraUsageDescription = "Scan the pairing QR code displayed by your Mac.";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Blot uses Bluetooth to connect your trusted devices.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Scan the pairing QR code displayed by your Mac.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Blot connects your iPhone to the agent running on your Mac.";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
@@ -345,23 +345,23 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macos/BlotMac/BlotMac.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9RPQ7DDSR4;
 				ENABLE_APP_SANDBOX = YES;
-                CODE_SIGN_ENTITLEMENTS = macos/BlotMac/BlotMac.entitlements;
-                ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
-                ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
-                ENABLE_RESOURCE_ACCESS_BLUETOOTH = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = YES;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				GENERATE_INFOPLIST_FILE = YES;
-                INFOPLIST_FILE = BackendInfo.plist;
+				INFOPLIST_FILE = BackendInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Blot;
-                INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Blot connects your iPhone to the agent running on your Mac.";
-                INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Blot uses Bluetooth to connect your trusted devices.";
-                INFOPLIST_KEY_NSCameraUsageDescription = "Scan the pairing QR code displayed by your Mac.";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Blot uses Bluetooth to connect your trusted devices.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Scan the pairing QR code displayed by your Mac.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Blot connects your iPhone to the agent running on your Mac.";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
@@ -390,11 +390,11 @@
 				DEVELOPMENT_TEAM = 9RPQ7DDSR4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-                INFOPLIST_FILE = BackendInfo.plist;
+				INFOPLIST_FILE = BackendInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Blot;
-                INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Blot connects your iPhone to the agent running on your Mac.";
-                INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Blot uses Bluetooth to connect your trusted devices.";
-                INFOPLIST_KEY_NSCameraUsageDescription = "Scan the pairing QR code displayed by your Mac.";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Blot uses Bluetooth to connect your trusted devices.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Scan the pairing QR code displayed by your Mac.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Blot connects your iPhone to the agent running on your Mac.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -439,11 +439,11 @@
 				DEVELOPMENT_TEAM = 9RPQ7DDSR4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-                INFOPLIST_FILE = BackendInfo.plist;
+				INFOPLIST_FILE = BackendInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Blot;
-                INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Blot connects your iPhone to the agent running on your Mac.";
-                INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Blot uses Bluetooth to connect your trusted devices.";
-                INFOPLIST_KEY_NSCameraUsageDescription = "Scan the pairing QR code displayed by your Mac.";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Blot uses Bluetooth to connect your trusted devices.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Scan the pairing QR code displayed by your Mac.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Blot connects your iPhone to the agent running on your Mac.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -506,6 +506,24 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		B20000000000000000000005 /* XCLocalSwiftPackageReference "../packages/BlotAPI" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../packages/BlotAPI;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B20000000000000000000002 /* BlotAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BlotAPI;
+		};
+		B20000000000000000000004 /* BlotAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BlotAPI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 13CB0E69307BE25300C7CE8A /* Project object */;
 	validationLevel = 1;
